@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>test</title>
+  <link rel="stylesheet" type="text/css" href="libs/jquery.gridster.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script type="text/javascript" src="libs/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="libs/jquery.gridster.min.js"></script>
+  <script type="text/javascript" src="libs/jquery.zoomooz.min.js"></script>
+  <script type="text/javascript" src="libs/ir-client.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+  <button class="control-button" name="discover" onclick="discover()">add</button>
+  <hr/>
+  <button class="control-button" name="edit" onclick="switchEdit()">edit</button>
+  <button class="control-button" name="add" onclick="addButton()">add</button>
+  <hr/>
+  <div class="gridster">
+    <ul></ul>
+  </div>
+
+  <div class="template">
+    <li id="button-template" class="button"></li>
+    <li id="add-button-template" onclick="addButton()">+</li>
+  </div>
+</body>
+</html>
