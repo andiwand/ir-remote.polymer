@@ -1,0 +1,22 @@
+{
+  "name": "ir-remote",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "git+https://github.com/jquery/jquery.git",
+    "gridster": "git+https://github.com/ducksboard/gridster.js.git",
+    "polymer": "Polymer/polymer#^0.5",
+    "core-elements": "Polymer/core-elements#^0.5",
+    "paper-elements": "Polymer/paper-elements#^0.5",
+    "ir-client": "git+https://github.com/andiwand/ir-client.js.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "resolutions": {
+    "webcomponentsjs": "0.7.1"
+  }
+}

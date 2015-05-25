@@ -19,11 +19,6 @@ $(function() {
   addButton();
   addButton();
   switchEdit();
-
-  $(document).click(function(event) {
-    $("body").zoomTo({duration: 600});
-    event.stopPropagation();
-  });
 });
 
 // TODO: do it with onmousedown
@@ -65,11 +60,7 @@ function addButton() {
 
 function clickButton(event) {
   if (edit) {
-    if (checkDrag()) return;
-
-    var button = event.data;
-    button.zoomTo({targetsize: 0.75, duration: 600});
-    event.stopPropagation();
+    
   } else {
     console.log("send");
   }
