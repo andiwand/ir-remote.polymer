@@ -23,6 +23,9 @@
   <link rel="import" href="libs/paper-icon-button/paper-icon-button.html">
   <link rel="import" href="libs/paper-tabs/paper-tabs.html">
 
+  <link rel="import" href="libs/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="libs/core-animated-pages/transitions/slide-from-right.html">
+
   <style>
     body {
       font-family: sans-serif;
@@ -54,8 +57,8 @@
         <span>Menu</span>
       </core-toolbar>
       <core-menu>
-        <core-item label="One"></core-item>
-        <core-item label="Two"></core-item>
+        <core-item class="side-menu" label="Remote" hash="remote"></core-item>
+        <core-item class="side-menu" label="Devices" hash="devices"></core-item>
       </core-menu>
     </core-header-panel>
 
@@ -65,8 +68,9 @@
         <span flex>Title</span>
         <paper-icon-button id="morebutton" icon="more-vert"></paper-icon-button>
       </core-toolbar>
-      <div class="content">
-        <div class="content">
+
+      <core-animated-pages valueattr="hash" transitions="slide-from-right" class="content">
+        <section hash="remote" layout vertical center-center>
           <button class="control-button" name="discover" onclick="discover()">discover</button>
           <hr/>
           <button class="control-button" name="edit" onclick="switchEdit()">edit</button>
@@ -80,8 +84,12 @@
             <li id="button-template" class="button"></li>
             <li id="add-button-template" onclick="addButton()">+</li>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section hash="devices" layout vertical center-center>
+          <div>devices</div>
+        </section>
+      </core-animated-pages>
     </core-header-panel>
   </core-drawer-panel>
 

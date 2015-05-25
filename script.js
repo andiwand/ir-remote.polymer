@@ -19,7 +19,19 @@ $(function() {
   addButton();
   addButton();
   switchEdit();
+
+  var contentElement = $(".content");
+  $(".side-menu").click(function() {
+    selectSideMenuItem($(this).attr("hash"));
+  });
 });
+
+function selectSideMenuItem(hash) {
+  $(".content").prop("selected", hash);
+  var selectedItem = $(".side-menu[hash='" + hash + "']");
+  selectedItem.prop("active", "active").addClass("core-selected");
+  $(".side-menu").not(selectedItem).removeProp("active").removeClass("core-selected");
+}
 
 // TODO: do it with onmousedown
 function checkDrag() {
@@ -60,7 +72,7 @@ function addButton() {
 
 function clickButton(event) {
   if (edit) {
-    
+
   } else {
     console.log("send");
   }
