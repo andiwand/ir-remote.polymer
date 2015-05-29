@@ -24,6 +24,8 @@ $(function() {
   $(".side-menu").click(function() {
     selectSideMenuItem($(this).attr("hash"));
   });
+
+  selectSideMenuItem("remote");
 });
 
 function selectSideMenuItem(hash) {
@@ -41,12 +43,18 @@ function checkDrag() {
 }
 
 function switchEdit() {
+  var addButton = $("#add-button");
+
   if (edit) {
     gridster.disable();
     gridster.disable_resize();
+
+    addButton.attr("disabled", "true");
   } else {
     gridster.enable();
     gridster.enable_resize();
+
+    addButton.removeAttr("disabled");
   }
   edit = !edit;
 }
@@ -72,10 +80,19 @@ function addButton() {
 
 function clickButton(event) {
   if (edit) {
-
+    toggleEditDialog();
   } else {
     console.log("send");
   }
+}
+
+function toggleEditDialog() {
+  console.log($(".edit-dialog"));
+  $(".edit-dialog").get(0).toggle();
+}
+
+function saveEdit() {
+  console.log("save");
 }
 
 function dicover() {
