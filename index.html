@@ -8,93 +8,73 @@
   <script src="libs/webcomponentsjs/webcomponents.js"></script>
 
   <link rel="import" href="libs/polymer/polymer.html">
-  <link rel="import" href="libs/core-toolbar/core-toolbar.html">
-  <link rel="import" href="libs/core-menu/core-menu.html">
-  <link rel="import" href="libs/core-item/core-item.html">
-  <link rel="import" href="libs/core-header-panel/core-header-panel.html">
-  <link rel="import" href="libs/core-drawer-panel/core-drawer-panel.html">
-  <link rel="import" href="libs/core-icons/core-icons.html">
-  <link rel="import" href="libs/core-scaffold/core-scaffold.html">
-  <link rel="import" href="libs/core-animated-pages/core-animated-pages.html">
-  <link rel="import" href="libs/core-animated-pages/transitions/slide-from-right.html">
+  <link rel="import" href="libs/iron-icons/iron-icons.html">
+  <link rel="import" href="libs/iron-pages/iron-pages.html">
+  <link rel="import" href="libs/paper-styles/paper-styles.html">
+  <link rel="import" href="libs/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="libs/paper-menu/paper-menu.html">
+  <link rel="import" href="libs/paper-item/paper-item.html">
+  <link rel="import" href="libs/paper-header-panel/paper-header-panel.html">
+  <link rel="import" href="libs/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="libs/paper-icon-button/paper-icon-button.html">
   <link rel="import" href="libs/paper-tabs/paper-tabs.html">
   <link rel="import" href="libs/paper-button/paper-button.html">
   <link rel="import" href="libs/paper-toggle-button/paper-toggle-button.html">
   <link rel="import" href="libs/paper-dialog/paper-dialog.html">
-  <link rel="import" href="libs/paper-dialog/paper-action-dialog.html">
-  <link rel="import" href="libs/font-roboto/roboto.html">
 
   <script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="libs/gridster/dist/jquery.gridster.min.js"></script>
   <script type="text/javascript" src="libs/ir-client/build/ir-client.min.js"></script>
   <script type="text/javascript" src="script.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="libs/jquery.gridster.min.css">
+  <link rel="stylesheet" type="text/css" href="libs/gridster/dist/jquery.gridster.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
-
-  <style>
-    body {
-      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-      margin: 0;
-      padding: 24px;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      -webkit-touch-callout: none;
-    }
-    core-header-panel {
-      background: white;
-    }
-    core-toolbar {
-      background-color: #03A9F4;
-    }
-    #navheader {
-      background-color: #03A9F4;
-    }
-    section {
-      padding: 20px;
-    }
-  </style>
 </head>
 
-<body name="my-app" unresolved>
-  <core-scaffold>
-    <core-header-panel navigation flex>
-      <core-toolbar id="navheader">
+<body unresolved>
+  <paper-drawer-panel>
+    <paper-header-panel id="left" drawer>
+      <paper-toolbar>
         <span>Menu</span>
-      </core-toolbar>
-      <core-menu>
-        <core-item class="side-menu" label="Remote" hash="remote"></core-item>
-        <core-item class="side-menu" label="Devices" hash="devices"></core-item>
-      </core-menu>
-    </core-header-panel>
+      </paper-toolbar>
+      <paper-menu id="menu" attrForSelected="name">
+        <paper-item class="side-menu" name="remote" index="0" onclick="menuSelect(this)">Remote</paper-item>
+        <paper-item class="side-menu" name="devices" index="1" onclick="menuSelect(this)">Devices</paper-item>
+      </paper-menu>
+    </paper-header-panel>
+    <paper-header-panel main>
+      <paper-toolbar>
+        <paper-icon-button icon="menu" on-tap="menuAction" paper-drawer-toggle></paper-icon-button>
+        <div title>IR-Remote</div>
+        <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
+      </paper-toolbar>
+      <iron-pages id="pages" attrForSelected="name">
+        <div name="remote">
+          <span>edit</span>
+          <paper-toggle-button onclick="switchEdit()"></paper-toggle-button>
+          <br/>
+          <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
+          <hr/>
 
-    <span tool>IR-Remote</span>
+          <div class="gridster">
+            <ul></ul>
+          </div>
 
-    <core-animated-pages valueattr="hash" transitions="slide-from-right" class="content">
-      <section hash="remote">
-        <span>edit</span>
-        <paper-toggle-button onclick="switchEdit()"></paper-toggle-button>
-        <br/>
-        <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
-        <hr/>
-        <div class="gridster">
-          <ul></ul>
+          <div class="template">
+            <li id="button-template" class="button"></li>
+            <li id="add-button-template" onclick="addButton()">+</li>
+          </div>
+
+          <paper-dialog class="edit-dialog" heading="Edit" backdrop autoclose>
+            <p>Some content</p>
+            <paper-button onclick="saveEdit()" affirmative autofocus>Save</paper-button>
+          </paper-dialog>
         </div>
-
-        <div class="template">
-          <li id="button-template" class="button"></li>
-          <li id="add-button-template" onclick="addButton()">+</li>
+        <div name="devices">
+          <div>devices</div>
         </div>
-
-        <paper-dialog class="edit-dialog" heading="Edit" backdrop autoclose>
-          <p>Some content</p>
-          <paper-button onclick="saveEdit()" affirmative autofocus>Save</paper-button>
-        </paper-dialog>
-      </section>
-      <section hash="devices">
-        <div>devices</div>
-      </section>
-    </core-animated-pages>
-  </core-scaffold>
+      </iron-pages>
+    </paper-header-panel>
+  </paper-drawer-panel>
 </body>
 </html>

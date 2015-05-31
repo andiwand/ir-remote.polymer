@@ -4,35 +4,25 @@ var drag;
 
 $(function() {
   gridster = $(".gridster > ul").gridster({
+    widget_class: "button",
     widget_margins: [5, 5],
     widget_base_dimensions: [50, 50],
     resize: {
       enabled: true
-    },
-    draggable: {
-      start: function(e) {
-        drag = true;
-      }
     }
   }).data("gridster");
+
   edit = true;
   addButton();
   addButton();
   switchEdit();
 
-  var contentElement = $(".content");
-  $(".side-menu").click(function() {
-    selectSideMenuItem($(this).attr("hash"));
-  });
-
-  selectSideMenuItem("remote");
+  menuSelect(document.getElementById("menu").items[0]);
 });
 
-function selectSideMenuItem(hash) {
-  $(".content").prop("selected", hash);
-  var selectedItem = $(".side-menu[hash='" + hash + "']");
-  selectedItem.prop("active", "active").addClass("core-selected");
-  $(".side-menu").not(selectedItem).removeProp("active").removeClass("core-selected");
+function menuSelect(menu) {
+  var index = menu.getAttribute("index");
+  $("#pages").get(0).select(index);
 }
 
 // TODO: do it with onmousedown
