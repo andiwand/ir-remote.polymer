@@ -20,6 +20,10 @@ iron-pages {
   padding: 20px;
 }
 
+#edit-dialog {
+  padding: 24px;
+}
+
 .template {
   display: none;
 }
@@ -34,6 +38,16 @@ iron-pages {
 /*/
 /* gridster
 /*/
+
+.gridster {
+  opacity: .8;
+
+  -webkit-transition: opacity .6s;
+  -moz-transition: opacity .6s;
+  -o-transition: opacity .6s;
+  -ms-transition: opacity .6s;
+  transition: opacity .6s;
+}
 
 .gridster ul {
   margin: 0;
@@ -52,16 +66,6 @@ iron-pages {
 
 .gridster li:hover {
   background: #E4E4E4;
-}
-
-.gridster {
-  opacity: .8;
-
-  -webkit-transition: opacity .6s;
-  -moz-transition: opacity .6s;
-  -o-transition: opacity .6s;
-  -ms-transition: opacity .6s;
-  transition: opacity .6s;
 }
 
 .gridster .gs-w {

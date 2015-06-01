@@ -38,8 +38,12 @@
         <span>Menu</span>
       </paper-toolbar>
       <paper-menu id="menu" attrForSelected="name">
-        <paper-item class="side-menu" name="remote" index="0" onclick="menuSelect(this)">Remote</paper-item>
-        <paper-item class="side-menu" name="devices" index="1" onclick="menuSelect(this)">Devices</paper-item>
+        <paper-item class="side-menu" name="remote" onclick="menuSelect(this)">Remote</paper-item>
+        <hr/>
+        <paper-item class="side-menu" name="devices" onclick="menuSelect(this)">Devices</paper-item>
+        <paper-item class="side-menu" name="remotes" onclick="menuSelect(this)">Remotes</paper-item>
+        <hr/>
+        <paper-item class="side-menu" name="settings" onclick="menuSelect(this)">Settings</paper-item>
       </paper-menu>
     </paper-header-panel>
     <paper-header-panel main>
@@ -56,25 +60,35 @@
           <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
           <hr/>
 
-          <div class="gridster">
-            <ul></ul>
-          </div>
+          <div id="grid" class="gridster"></div>
 
           <div class="template">
             <li id="button-template" class="button"></li>
             <li id="add-button-template" onclick="addButton()">+</li>
           </div>
-
-          <paper-dialog class="edit-dialog" heading="Edit" backdrop autoclose>
-            <p>Some content</p>
-            <paper-button onclick="saveEdit()" affirmative autofocus>Save</paper-button>
-          </paper-dialog>
         </div>
         <div name="devices">
           <div>devices</div>
         </div>
+        <div name="remotes">
+          <div>remotes</div>
+        </div>
+        <div name="settings">
+          <div>settings</div>
+        </div>
       </iron-pages>
     </paper-header-panel>
   </paper-drawer-panel>
+
+  <paper-dialog id="edit-dialog">
+    <h2>Edit</h2>
+    <paper-dialog-scrollable>
+      <p>Some content</p>
+    </paper-dialog-scrollable>
+    <div>
+      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-confirm>Accept</paper-button>
+    </div>
+  </paper-dialog>
 </body>
 </html>
