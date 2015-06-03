@@ -21,6 +21,8 @@
   <link rel="import" href="libs/paper-button/paper-button.html">
   <link rel="import" href="libs/paper-toggle-button/paper-toggle-button.html">
   <link rel="import" href="libs/paper-dialog/paper-dialog.html">
+  <link rel="import" href="elements/service.html">
+  <link rel="import" href="elements/remote-list.html">
 
   <script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="libs/gridster/dist/jquery.gridster.min.js"></script>
@@ -32,6 +34,19 @@
 </head>
 
 <body unresolved>
+  <!-- invisible stuff -->
+  <paper-dialog id="edit-dialog">
+    <h2>Edit</h2>
+    <paper-dialog-scrollable>
+      <p>Some content</p>
+    </paper-dialog-scrollable>
+    <div>
+      <paper-button dialog-dismiss>Cancel</paper-button>
+      <paper-button dialog-confirm>Accept</paper-button>
+    </div>
+  </paper-dialog>
+
+  <!-- visible stuff -->
   <paper-drawer-panel>
     <paper-header-panel id="left" drawer>
       <paper-toolbar>
@@ -72,6 +87,7 @@
         </div>
         <div name="remotes">
           <div>remotes</div>
+          <remote-list></remote-list>
         </div>
         <div name="settings">
           <div>settings</div>
@@ -79,16 +95,5 @@
       </iron-pages>
     </paper-header-panel>
   </paper-drawer-panel>
-
-  <paper-dialog id="edit-dialog">
-    <h2>Edit</h2>
-    <paper-dialog-scrollable>
-      <p>Some content</p>
-    </paper-dialog-scrollable>
-    <div>
-      <paper-button dialog-dismiss>Cancel</paper-button>
-      <paper-button dialog-confirm>Accept</paper-button>
-    </div>
-  </paper-dialog>
 </body>
 </html>

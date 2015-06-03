@@ -1,0 +1,40 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+
+<dom-module id="ir-service">
+  <style>
+    :host {
+      display: none;
+    }
+  </style>
+
+  <template>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "ir-service",
+    properties: {
+      devices: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      },
+      remotes: {
+        type: Array,
+        notify: true,
+        readOnly: true
+      }
+    },
+    ready: function() {
+      this._setDevices([
+        {name: "device a", description: "blabla device a."},
+        {name: "device b", description: "blabla device b."}
+      ]);
+      this._setRemotes([
+        {name: "remote a", description: "blabla remote a."},
+        {name: "remote b", description: "blabla remote b."}
+      ]);
+    }
+  });
+</script>
