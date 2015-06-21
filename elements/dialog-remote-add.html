@@ -11,12 +11,11 @@
 
   <template>
     <h2>Add remote</h2>
-    <paper-dialog-scrollable>
-      Some content
-      <br/>
-      <paper-input id="name" label="Name" error-message="error"
-        autoValidate required></paper-input>
-    </paper-dialog-scrollable>
+    <span>Some content</span>
+    <paper-input label="Name" error-message="error"
+      auto-validate required></paper-input>
+    <paper-input label="Description" error-message="error"
+      auto-validate required></paper-input>
     <div>
       <paper-button on-tap="cancel">Cancel</paper-button>
       <paper-button on-tap="accept">Accept</paper-button>
@@ -31,16 +30,12 @@
     properties: {
       modal: { value: true }
     },
+    ready: function() {},
     cancel: function() {
       this.close();
     },
     accept: function() {
       console.log(this.$.name.validate());
-      console.log(this.$.name.invalid);
-    },
-    validate: function(value) {
-      console.log("asdf");
-      return false;
     }
   });
 </script>

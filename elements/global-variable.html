@@ -1,16 +1,5 @@
 <link rel="import" href="../libs/polymer/polymer.html">
 
-<dom-module name="global-variable">
-  <style>
-    :host {
-      display: none;
-    }
-  </style>
-
-  <template>
-  </template>
-</dom-module>
-
 <script>
   (function() {
     var map = {};
@@ -18,10 +7,7 @@
     Polymer({
       is: "global-variable",
       properties: {
-        key: {
-          type: String,
-          readOnly: true
-        },
+        key: String,
         value: {
           type: Object,
           notify: true,
