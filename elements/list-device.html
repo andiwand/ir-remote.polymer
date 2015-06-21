@@ -1,24 +1,27 @@
 <link rel="import" href="../libs/polymer/polymer.html">
-<link rel="import" href="service.html">
-<link rel="import" href="remote-card.html">
+<link rel="import" href="ir-service.html">
+<link rel="import" href="card-device.html">
 
-<dom-module id="remote-list">
+<dom-module id="device-list">
   <style>
     :host {
       display: block;
       width: 100%;
     }
+    device-card {
+      margin-bottom: 20px;
+    }
   </style>
 
   <template>
-    <ir-service id="service" remotes="{{remotes}}" devices="{{devices}}"></ir-service>
+    <ir-service id="service" devices="{{devices}}"></ir-service>
 
     <div layout vertical center>
-      <template is="dom-repeat" items="{{remotes}}">
-        <remote-card>
+      <template is="dom-repeat" items="{{devices}}">
+        <device-card>
           <h2>{{item.name}}</h2>
           <p>{{item.description}}</p>
-        </remote-card>
+        </device-card>
       </template>
     </div>
   </template>
@@ -26,6 +29,6 @@
 
 <script>
   Polymer({
-    is: "remote-list"
+    is: "device-list"
   });
 </script>

@@ -1,0 +1,34 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="ir-service.html">
+<link rel="import" href="card-remote.html">
+
+<dom-module id="remote-list">
+  <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    remote-card {
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <template>
+    <ir-service id="service" remotes="{{remotes}}"></ir-service>
+
+    <div layout vertical center>
+      <template is="dom-repeat" items="{{remotes}}">
+        <remote-card>
+          <h2>{{item.name}}</h2>
+          <p>{{item.description}}</p>
+        </remote-card>
+      </template>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "remote-list"
+  });
+</script>

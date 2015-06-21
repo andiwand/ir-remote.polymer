@@ -1,0 +1,46 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="../libs/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../libs/paper-input/paper-input.html">
+<link rel="import" href="ir-service.html">
+
+<dom-module id="dialog-remote-add">
+  <link rel="import" type="css" href="../libs/paper-dialog-behavior/paper-dialog-common.css">
+
+  <style>
+  </style>
+
+  <template>
+    <h2>Add remote</h2>
+    <paper-dialog-scrollable>
+      Some content
+      <br/>
+      <paper-input id="name" label="Name" error-message="error"
+        autoValidate required></paper-input>
+    </paper-dialog-scrollable>
+    <div>
+      <paper-button on-tap="cancel">Cancel</paper-button>
+      <paper-button on-tap="accept">Accept</paper-button>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "dialog-remote-add",
+    behaviors: [ Polymer.PaperDialogBehavior ],
+    properties: {
+      modal: { value: true }
+    },
+    cancel: function() {
+      this.close();
+    },
+    accept: function() {
+      console.log(this.$.name.validate());
+      console.log(this.$.name.invalid);
+    },
+    validate: function(value) {
+      console.log("asdf");
+      return false;
+    }
+  });
+</script>

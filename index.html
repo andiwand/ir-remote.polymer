@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>poly</title>
+  <title>IR-Remote</title>
 
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
@@ -9,6 +9,8 @@
 
   <link rel="import" href="libs/polymer/polymer.html">
   <link rel="import" href="libs/iron-icons/iron-icons.html">
+  <link rel="import" href="libs/iron-icons/hardware-icons.html">
+  <link rel="import" href="libs/iron-icons/editor-icons.html">
   <link rel="import" href="libs/iron-pages/iron-pages.html">
   <link rel="import" href="libs/paper-styles/paper-styles.html">
   <link rel="import" href="libs/paper-toolbar/paper-toolbar.html">
@@ -21,8 +23,9 @@
   <link rel="import" href="libs/paper-button/paper-button.html">
   <link rel="import" href="libs/paper-toggle-button/paper-toggle-button.html">
   <link rel="import" href="libs/paper-dialog/paper-dialog.html">
-  <link rel="import" href="elements/service.html">
-  <link rel="import" href="elements/remote-list.html">
+  <link rel="import" href="elements/list-remote.html">
+  <link rel="import" href="elements/list-device.html">
+  <link rel="import" href="elements/dialog-remote-add.html">
 
   <script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="libs/gridster/dist/jquery.gridster.min.js"></script>
@@ -34,66 +37,85 @@
 </head>
 
 <body unresolved>
-  <!-- invisible stuff -->
-  <paper-dialog id="edit-dialog">
-    <h2>Edit</h2>
-    <paper-dialog-scrollable>
-      <p>Some content</p>
-    </paper-dialog-scrollable>
-    <div>
-      <paper-button dialog-dismiss>Cancel</paper-button>
-      <paper-button dialog-confirm>Accept</paper-button>
-    </div>
-  </paper-dialog>
+  <dialog-remote-add id="dialog-remote-add"></dialog-remote-add>
 
-  <!-- visible stuff -->
-  <paper-drawer-panel>
-    <paper-header-panel id="left" drawer>
-      <paper-toolbar>
-        <span>Menu</span>
-      </paper-toolbar>
-      <paper-menu id="menu" attrForSelected="name">
-        <paper-item class="side-menu" name="remote" onclick="menuSelect(this)">Remote</paper-item>
-        <hr/>
-        <paper-item class="side-menu" name="devices" onclick="menuSelect(this)">Devices</paper-item>
-        <paper-item class="side-menu" name="remotes" onclick="menuSelect(this)">Remotes</paper-item>
-        <hr/>
-        <paper-item class="side-menu" name="settings" onclick="menuSelect(this)">Settings</paper-item>
-      </paper-menu>
-    </paper-header-panel>
-    <paper-header-panel main>
-      <paper-toolbar>
-        <paper-icon-button icon="menu" on-tap="menuAction" paper-drawer-toggle></paper-icon-button>
-        <div title>IR-Remote</div>
-        <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
-      </paper-toolbar>
-      <iron-pages id="pages" attrForSelected="name">
-        <div name="remote">
-          <span>edit</span>
-          <paper-toggle-button onclick="switchEdit()"></paper-toggle-button>
-          <br/>
-          <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
-          <hr/>
+  <iron-pages id="pages" attrForSelected="name">
+    <div name="main">
+      <paper-drawer-panel>
+        <paper-header-panel id="left" drawer>
+          <paper-toolbar>
+            <span>Menu</span>
+          </paper-toolbar>
+          <paper-menu id="main-menu" attrForSelected="name" pages="main-pages">
+            <paper-item class="side-menu" name="remotes" onclick="menuSelect(this)">Remotes</paper-item>
+            <paper-item class="side-menu" name="devices" onclick="menuSelect(this)">Devices</paper-item>
+            <hr/>
+            <paper-item class="side-menu" name="settings" onclick="menuSelect(this)">Settings</paper-item>
+            <paper-item class="side-menu" name="about" onclick="menuSelect(this)">About</paper-item>
+          </paper-menu>
+        </paper-header-panel>
+        <iron-pages id="main-pages" attrForSelected="name" main>
+          <div name="remotes">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div title>Remotes</div>
+                <paper-icon-button icon="add-circle" onclick="addRemote()"></paper-icon-button>
+              </paper-toolbar>
+            </paper-header-panel>
 
-          <div id="grid" class="gridster"></div>
-
-          <div class="template">
-            <li id="button-template" class="button"></li>
-            <li id="add-button-template" onclick="addButton()">+</li>
+            <div class="page">
+              <remote-list></remote-list>
+            </div>
           </div>
+          <div name="devices">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div title>Devices</div>
+              </paper-toolbar>
+            </paper-header-panel>
+
+            <div class="page">
+              <device-list></device-list>
+            </div>
+          </div>
+          <div name="settings">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div title>Settings</div>
+              </paper-toolbar>
+            </paper-header-panel>
+          </div>
+        </iron-pages>
+      </paper-drawer-panel>
+    </div>
+    <div name="remote">
+      <paper-header-panel>
+        <paper-toolbar>
+          <paper-icon-button icon="arrow-back" onclick="remoteBack()"></paper-icon-button>
+          <div title>Remote</div>
+          <paper-icon-button icon="hardware:cast"></paper-icon-button>
+          <paper-icon-button icon="editor:mode-edit"></paper-icon-button>
+        </paper-toolbar>
+      </paper-header-panel>
+
+      <div class="page">
+        <span>edit</span>
+        <paper-toggle-button onclick="switchEdit()"></paper-toggle-button>
+        <br/>
+        <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
+        <hr/>
+
+        <div id="grid" class="gridster"></div>
+
+        <div class="template">
+          <li id="button-template" class="button"></li>
+          <li id="add-button-template" onclick="addButton()">+</li>
         </div>
-        <div name="devices">
-          <div>devices</div>
-        </div>
-        <div name="remotes">
-          <div>remotes</div>
-          <remote-list></remote-list>
-        </div>
-        <div name="settings">
-          <div>settings</div>
-        </div>
-      </iron-pages>
-    </paper-header-panel>
-  </paper-drawer-panel>
+      </div>
+    </div>
+  </iron-pages>
 </body>
 </html>

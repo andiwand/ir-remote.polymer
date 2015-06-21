@@ -5,7 +5,8 @@ var drag;
 $(function() {
   initGrister();
 
-  selectMenu("remote");
+  selectRootPage("main");
+  selectMain("remotes");
 });
 
 function initGrister() {
@@ -25,28 +26,44 @@ function initGrister() {
   switchEdit();
 }
 
-function initPage(tag) {
+function selectRootPage(tag) {
+  selectPage(tag, document.getElementById("pages"));
+}
+
+function selectMain(tag) {
+  selectMenu(tag, document.getElementById("main-menu"));
+}
+
+function initPage(page, tag) {
   if (tag === "remote") initGrister();
 }
 
-function selectMenu(tag) {
-  var menuTagName = $("#menu").attr("attrForSelected");
-  var pagesTagName = $("#pages").attr("attrForSelected");
-  var menuItem = $("#menu").find("[" + menuTagName + "='" + tag + "']").get(0);
-  var page = $("#pages").find("[" + pagesTagName + "='" + tag + "']").get(0);
-  var menuIndex = $("#menu").get(0).indexOf(menuItem);
-  var pageIndex = $("#pages").get(0).indexOf(page);
+function selectPage(tag, pages) {
+  var pagesTagName = pages.getAttribute("attrForSelected");
+  var page = $(pages).find("[" + pagesTagName + "='" + tag + "']").get(0);
+  var pageIndex = pages.indexOf(page);
 
-  $("#menu").get(0).select(menuIndex);
-  $("#pages").get(0).select(pageIndex);
+  pages.select(pageIndex);
 
-  initPage(tag);
+  initPage(page, tag);
 }
 
-function menuSelect(menu) {
-  var tagName = $("#menu").attr("attrForSelected");
-  var tag = menu.getAttribute(tagName);
-  selectMenu(tag);
+function selectMenu(tag, menu) {
+  var qMenu = $(menu);
+  var menuTagName = qMenu.attr("attrForSelected");
+  var menuIndex = menu.indexOf(
+    qMenu.find("[" + menuTagName + "='" + tag + "']").get(0));
+  var pages = document.getElementById(qMenu.attr("pages"));
+
+  menu.select(menuIndex);
+  selectPage(tag, pages);
+}
+
+function menuSelect(item) {
+  var menu = $(item).closest("paper-menu");
+  var tagName = menu.attr("attrForSelected");
+  var tag = item.getAttribute(tagName);
+  selectMenu(tag, menu.get(0));
 }
 
 // TODO: do it with onmousedown
@@ -111,4 +128,16 @@ function saveEdit() {
 
 function dicover() {
 
+}
+
+function addRemote() {
+  var dialog = document.getElementById("dialog-remote-add");
+  dialog.open();
+}
+
+function remoteBack() {
+  // TODO: other solution?
+  window.setTimeout(function() {
+    selectRootPage("main");
+  }, 0);
 }

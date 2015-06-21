@@ -1,0 +1,40 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+
+<dom-module id="device-card">
+  <style>
+    :host {
+      display: block;
+      position: relative;
+      background-color: white;
+      padding: 20px;
+      font-size: 1.2rem;
+      font-weight: 300;
+      box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px,
+                  rgba(0, 0, 0, 0.098) 0px 0px 3px;
+    }
+    .card-header {
+      margin-bottom: 10px;
+    }
+    polyfill-next-selector {
+      content: '.card-header h2';
+    }
+    .card-header ::content h2 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 300;
+    }
+  </style>
+
+  <template>
+    <div class="card-header" layout horizontal center>
+      <content select="h2"></content>
+    </div>
+    <content></content>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "device-card"
+  });
+</script>

@@ -1,0 +1,46 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-ir-remote.html">
+
+<dom-module id="ir-service">
+  <style>
+    :host {
+      display: none;
+    }
+  </style>
+
+  <template>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "ir-service",
+    properties: {
+      remotes: {
+        type: Array,
+        notify: true,
+        computed: "getRemotes(dummy)"
+      },
+      devices: {
+        type: Array,
+        notify: true,
+        computed: "getDevices(dummy)"
+      }
+    },
+    ready: function() {
+      var observer = $.proxy(this.remoteReady, this);
+      IR.remote.addReadyObserver(observer);
+    },
+    remoteReady: function() {
+      this._settings = IR.remote.load();
+      this.notifyPath("dummy", null);
+    },
+    getRemotes: function() {
+      return this._settings.remotes;
+    },
+    getDevices: function() {
+      var result = [];
+      return result;
+    }
+  });
+</script>

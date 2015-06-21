@@ -1,8 +1,8 @@
 body {
   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
   margin: 0;
-  padding: 24px;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
 }
 
@@ -16,7 +16,7 @@ paper-toolbar {
   margin: 0px;
 }
 
-iron-pages {
+.page {
   padding: 20px;
 }
 
