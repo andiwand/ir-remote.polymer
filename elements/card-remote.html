@@ -30,6 +30,7 @@
   <template>
     <div class="card-header">
       <span class="heading">{{remote.name}}</span>
+      <paper-icon-button icon="open-in-new" on-tap="onOpen"></paper-icon-button>
       <paper-icon-button icon="create" on-tap="onEdit"></paper-icon-button>
       <paper-icon-button icon="delete" on-tap="onRemove"></paper-icon-button>
     </div>
@@ -53,6 +54,9 @@
           this.notifyPath("remote." + key, value);
         }, this));
       }, this);
+    },
+    onOpen: function() {
+      this.fire("open", this.remote, this);
     },
     onEdit: function() {
       this.fire("edit", this.remote, this);

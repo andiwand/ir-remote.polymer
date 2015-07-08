@@ -18,8 +18,11 @@ $(function() {
   selectMain("remotes");
 
   var remoteList = document.getElementById("list-remote");
-  remoteList.addEventListener("edit", editRemote);
-  remoteList.addEventListener("remove", removeRemote);
+  remoteList.addEventListener("open", onOpenRemote);
+  remoteList.addEventListener("edit", onEditRemote);
+  remoteList.addEventListener("remove", onRemoveRemote);
+
+  var deviceList = document.getElementById("list-device");
 
   var remoteDialog = document.getElementById("dialog-remote");
   remoteDialog.addEventListener("accept", acceptRemoteDialog);
@@ -160,15 +163,38 @@ function openRemoteDialog(remote) {
   dialog.open();
 }
 
-function editRemote(msg) {
+function onEditRemote(msg) {
   var remote = msg.detail;
+  editRemote(remote);
+}
+
+function editRemote(remote) {
   openRemoteDialog(remote);
 }
 
-function removeRemote(msg) {
+function onRemoveRemote(msg) {
   var remote = msg.detail;
+  removeRemote(remote);
+}
+
+function removeRemote(remote) {
   var index = $.inArray(remote, IR.remote.state.remotes);
   IR.remote.state.remotes.splice(index, 1);
+}
+
+function onOpenRemote(msg) {
+    var remote = msg.detail;
+    openRemote(remote);
+}
+
+function openRemote(remote) {
+  var title = $("#remote-title");
+  title.text(remote.name);
+
+  // TODO: init gridster
+  // TODO: load buttons
+
+  selectRootPage("remote");
 }
 
 function remoteBack() {
