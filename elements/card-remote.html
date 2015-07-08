@@ -1,6 +1,9 @@
 <link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="../libs/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../libs/iron-icons/iron-icons.html">
+<link rel="import" href="../libs/paper-icon-button/paper-icon-button.html">
 
-<dom-module id="remote-card">
+<dom-module id="card-remote">
   <style>
     :host {
       display: block;
@@ -13,12 +16,11 @@
                   rgba(0, 0, 0, 0.098) 0px 0px 3px;
     }
     .card-header {
+      @apply(--layout-horizontal);
       margin-bottom: 10px;
     }
-    polyfill-next-selector {
-      content: '.card-header h2';
-    }
-    .card-header ::content h2 {
+    .heading {
+      @apply(--layout-flex);
       margin: 0;
       font-size: 1.8rem;
       font-weight: 300;
@@ -26,15 +28,37 @@
   </style>
 
   <template>
-    <div class="card-header" layout horizontal center>
-      <content select="h2"></content>
+    <div class="card-header">
+      <span class="heading">{{remote.name}}</span>
+      <paper-icon-button icon="create" on-tap="onEdit"></paper-icon-button>
+      <paper-icon-button icon="delete" on-tap="onRemove"></paper-icon-button>
     </div>
-    <content></content>
+    <p>{{remote.description}}</p>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "remote-card"
+    is: "card-remote",
+    properties: {
+      remote: {
+        type: Object,
+        notify: true
+      }
+    },
+    ready: function() {
+      this.observer = new ObjectObserver(this.remote);
+      this.observer.open(function(added, removed, changed, getOldValueFn) {
+        $.each(changed, $.proxy(function(key, value) {
+          this.notifyPath("remote." + key, value);
+        }, this));
+      }, this);
+    },
+    onEdit: function() {
+      this.fire("edit", this.remote, this);
+    },
+    onRemove: function() {
+      this.fire("remove", this.remote, this);
+    }
   });
 </script>

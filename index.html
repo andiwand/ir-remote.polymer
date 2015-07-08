@@ -8,6 +8,7 @@
   <script src="libs/webcomponentsjs/webcomponents.js"></script>
 
   <link rel="import" href="libs/polymer/polymer.html">
+  <link rel="import" href="libs/iron-flex-layout/iron-flex-layout.html">
   <link rel="import" href="libs/iron-icons/iron-icons.html">
   <link rel="import" href="libs/iron-icons/hardware-icons.html">
   <link rel="import" href="libs/iron-icons/editor-icons.html">
@@ -25,7 +26,7 @@
   <link rel="import" href="libs/paper-dialog/paper-dialog.html">
   <link rel="import" href="elements/list-remote.html">
   <link rel="import" href="elements/list-device.html">
-  <link rel="import" href="elements/dialog-remote-add.html">
+  <link rel="import" href="elements/dialog-remote.html">
 
   <script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="libs/gridster/dist/jquery.gridster.min.js"></script>
@@ -37,7 +38,7 @@
 </head>
 
 <body unresolved>
-  <dialog-remote-add id="dialog-remote-add"></dialog-remote-add>
+  <dialog-remote id="dialog-remote"></dialog-remote>
 
   <iron-pages id="pages" attrForSelected="name">
     <div name="main">
@@ -59,32 +60,32 @@
             <paper-header-panel>
               <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                <div title>Remotes</div>
-                <paper-icon-button icon="add-circle" onclick="addRemote()"></paper-icon-button>
+                <span class="title">Remotes</span>
+                <paper-icon-button icon="add-circle" onclick="openRemoteDialog()"></paper-icon-button>
               </paper-toolbar>
             </paper-header-panel>
 
             <div class="page">
-              <remote-list></remote-list>
+              <list-remote id="list-remote"></list-remote>
             </div>
           </div>
           <div name="devices">
             <paper-header-panel>
               <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                <div title>Devices</div>
+                <div class="title">Devices</div>
               </paper-toolbar>
             </paper-header-panel>
 
             <div class="page">
-              <device-list></device-list>
+              <list-device></list-device>
             </div>
           </div>
           <div name="settings">
             <paper-header-panel>
               <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                <div title>Settings</div>
+                <div class="title">Settings</div>
               </paper-toolbar>
             </paper-header-panel>
           </div>
@@ -95,7 +96,7 @@
       <paper-header-panel>
         <paper-toolbar>
           <paper-icon-button icon="arrow-back" onclick="remoteBack()"></paper-icon-button>
-          <div title>Remote</div>
+          <div class="title">Remote</div>
           <paper-icon-button icon="hardware:cast"></paper-icon-button>
           <paper-icon-button icon="editor:mode-edit"></paper-icon-button>
         </paper-toolbar>

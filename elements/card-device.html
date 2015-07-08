@@ -1,6 +1,6 @@
 <link rel="import" href="../libs/polymer/polymer.html">
 
-<dom-module id="device-card">
+<dom-module id="card-device">
   <style>
     :host {
       display: block;
@@ -15,10 +15,7 @@
     .card-header {
       margin-bottom: 10px;
     }
-    polyfill-next-selector {
-      content: '.card-header h2';
-    }
-    .card-header ::content h2 {
+    .card-header h2 {
       margin: 0;
       font-size: 1.8rem;
       font-weight: 300;
@@ -27,14 +24,20 @@
 
   <template>
     <div class="card-header" layout horizontal center>
-      <content select="h2"></content>
+      <h2>{{device.name}}</h2>
     </div>
-    <content></content>
+    <p>{{device.description}}</p>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "device-card"
+    is: "card-device",
+    properties: {
+      device: {
+        type: Object,
+        notify: true
+      }
+    }
   });
 </script>

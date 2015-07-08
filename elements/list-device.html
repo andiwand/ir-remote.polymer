@@ -1,34 +1,45 @@
 <link rel="import" href="../libs/polymer/polymer.html">
-<link rel="import" href="ir-service.html">
+<link rel="import" href="import-observer.html">
+<link rel="import" href="import-ir-client.html">
 <link rel="import" href="card-device.html">
 
-<dom-module id="device-list">
+<dom-module id="list-device">
   <style>
     :host {
       display: block;
       width: 100%;
     }
-    device-card {
+    card-device {
       margin-bottom: 20px;
     }
   </style>
 
   <template>
-    <ir-service id="service" devices="{{devices}}"></ir-service>
-
     <div layout vertical center>
       <template is="dom-repeat" items="{{devices}}">
-        <device-card>
-          <h2>{{item.name}}</h2>
-          <p>{{item.description}}</p>
-        </device-card>
+        <card-device remote="{{item}}"></card-device>
       </template>
     </div>
   </template>
 </dom-module>
 
 <script>
+  // TODO: generic list
   Polymer({
-    is: "device-list"
+    is: "list-device",
+    ready: function() {
+      this.devices = [];
+
+      IR.remote.addObserver($.proxy(this._remoteReady, this));
+    },
+    _remoteReady: function() {
+      this.observer = new ArrayObserver(IR.remote.state.devices);
+      this.observer.open(this._fire, this);
+      this._fire();
+    },
+    _fire: function() {
+      // TODO: alternatives?
+      this.devices = IR.remote.state.devices.slice();
+    }
   });
 </script>

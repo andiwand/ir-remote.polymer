@@ -1,0 +1,34 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-observer.html">
+
+<script>
+  Polymer({
+    is: "observer-array",
+    properties: {
+      data: {
+        type: Array,
+        notify: true,
+        computed: "getData(dummy)"
+      }
+    },
+    _fire: function() {
+      console.log("fire");
+      this.notifyPath("dummy", null);
+    },
+    setData: function(array) {
+      this._data = array;
+
+      if (this._observer) this._observer.close();
+      this._observer = new ArrayObserver(array);
+      this._observer.open($.proxy(function(splices) {
+        this._fire();
+      }), this);
+
+      this._fire();
+    },
+    getData: function() {
+      console.log("get data");
+      return this._data;
+    }
+  });
+</script>

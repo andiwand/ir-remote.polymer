@@ -7,7 +7,8 @@
     "polymer": "Polymer/polymer#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
-    "ir-client": "git+https://github.com/andiwand/ir-client.js.git"
+    "ir-client": "git+https://github.com/andiwand/ir-client.js.git",
+    "observe-js": "git+https://github.com/Polymer/observe-js"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

@@ -2,11 +2,27 @@ var gridster;
 var edit;
 var drag;
 
+// TODO: remove
+IR.interface.load = function(callback) {
+  $.getJSON("config.json", function(data) {
+    callback(data);
+  });
+};
+
 $(function() {
+  IR.remote.init();
+
   initGrister();
 
   selectRootPage("main");
   selectMain("remotes");
+
+  var remoteList = document.getElementById("list-remote");
+  remoteList.addEventListener("edit", editRemote);
+  remoteList.addEventListener("remove", removeRemote);
+
+  var remoteDialog = document.getElementById("dialog-remote");
+  remoteDialog.addEventListener("accept", acceptRemoteDialog);
 });
 
 function initGrister() {
@@ -126,13 +142,33 @@ function saveEdit() {
   console.log("save");
 }
 
-function dicover() {
+function acceptRemoteDialog() {
+  var dialog = document.getElementById("dialog-remote");
+  var remote = dialog.remote ? dialog.remote : {};
 
+  dialog.get(remote);
+  if (!dialog.remote) IR.remote.state.remotes.push(remote)
+
+  dialog.close();
 }
 
-function addRemote() {
-  var dialog = document.getElementById("dialog-remote-add");
+function openRemoteDialog(remote) {
+  var dialog = document.getElementById("dialog-remote");
+
+  dialog.set(remote);
+  dialog.remote = remote;
   dialog.open();
+}
+
+function editRemote(msg) {
+  var remote = msg.detail;
+  openRemoteDialog(remote);
+}
+
+function removeRemote(msg) {
+  var remote = msg.detail;
+  var index = $.inArray(remote, IR.remote.state.remotes);
+  IR.remote.state.remotes.splice(index, 1);
 }
 
 function remoteBack() {
