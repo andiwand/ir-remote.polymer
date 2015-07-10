@@ -101,16 +101,13 @@
           <paper-icon-button icon="arrow-back" onclick="remoteBack()"></paper-icon-button>
           <div id="remote-title" class="title">Remote</div>
           <paper-icon-button id="remote-cast" icon="hardware:cast"></paper-icon-button>
-          <paper-icon-button id="remote-add" icon="add-circle" onclick="" hidden></paper-icon-button>
-          <paper-icon-button id="remote-edit" icon="editor:mode-edit" onclick="switchEdit()"></paper-icon-button>
-          <paper-icon-button id="remote-save" icon="done" onclick="switchEdit()" hidden></paper-icon-button>
+          <paper-icon-button id="remote-add" icon="add-circle" onclick="remoteAddButton()"></paper-icon-button>
+          <paper-icon-button id="remote-edit" icon="editor:mode-edit" onclick="remoteStartEdit()"></paper-icon-button>
+          <paper-icon-button id="remote-save" icon="done" onclick="remoteEndEdit()"></paper-icon-button>
         </paper-toolbar>
       </paper-header-panel>
 
       <div class="page">
-        <paper-button onclick="addButton()" id="add-button" autofocus raised>add</paper-button>
-        <hr/>
-
         <div id="grid" class="gridster"></div>
 
         <div class="template">

@@ -1,5 +1,5 @@
 var gridster;
-var edit;
+var remoteEdit;
 var drag;
 
 // TODO: remove
@@ -39,10 +39,9 @@ function initGrister() {
     }
   }).data("gridster");
 
-  edit = true;
-  addButton();
-  addButton();
-  switchEdit();
+  remoteAddButton();
+  remoteAddButton();
+  remoteEditable(false);
 }
 
 function selectRootPage(tag) {
@@ -92,21 +91,29 @@ function checkDrag() {
   return result;
 }
 
-function switchEdit() {
-  var addButton = $("#add-button");
+function remoteEditable(edit) {
+  $("#remote-cast").attr("hidden", edit);
+  $("#remote-add").attr("hidden", !edit);
+  $("#remote-edit").attr("hidden", edit);
+  $("#remote-save").attr("hidden", !edit);
 
   if (edit) {
-    gridster.disable();
-    gridster.disable_resize();
-
-    addButton.attr("disabled", "true");
-  } else {
     gridster.enable();
     gridster.enable_resize();
-
-    addButton.removeAttr("disabled");
+  } else {
+    gridster.disable();
+    gridster.disable_resize();
   }
-  edit = !edit;
+
+  remoteEdit = edit;
+}
+
+function remoteStartEdit() {
+  remoteEditable(true);
+}
+
+function remoteEndEdit() {
+  remoteEditable(false);
 }
 
 function cloneTemplate(selector, id) {
@@ -120,29 +127,19 @@ function cloneTemplate(selector, id) {
   return clone;
 }
 
-function addButton() {
-  if (!edit) return;
+function remoteAddButton() {
   if (checkDrag()) return;
   var button = cloneTemplate($("#button-template"));
   gridster.add_widget(button);
-  button.click(button, clickButton);
+  button.click(button, remoteClickButton);
 }
 
-function clickButton(event) {
-  if (edit) {
+function remoteClickButton(event) {
+  if (remoteEdit) {
     toggleEditDialog();
   } else {
     console.log("send");
   }
-}
-
-function toggleEditDialog() {
-  console.log($(".edit-dialog"));
-  $("#edit-dialog").get(0).toggle();
-}
-
-function saveEdit() {
-  console.log("save");
 }
 
 function acceptRemoteDialog() {
