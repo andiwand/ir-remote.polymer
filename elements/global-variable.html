@@ -1,0 +1,37 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+
+<script>
+  (function() {
+    var map = {};
+
+    Polymer({
+      is: "global-variable",
+      properties: {
+        key: String,
+        value: {
+          type: Object,
+          notify: true,
+          observer: "setValue"
+        }
+      },
+      ready: function() {
+        var reference = map[this.key];
+        if (reference === undefined) {
+          reference = {
+            value: null,
+            instances: []
+          };
+          map[this.key] = reference;
+        }
+        reference.instances.push(this);
+      },
+      setValue: function(value) {
+        var reference = map[this.key];
+        reference.value = value;
+        for (var i = 0; i < reference.instances.length; i++) {
+          reference.instances[i].value = value;
+        }
+      }
+    });
+  })();
+</script>

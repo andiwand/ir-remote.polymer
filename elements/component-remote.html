@@ -1,0 +1,79 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="component-gridster.html">
+
+<dom-module id="component-remote">
+  <style>
+  </style>
+
+  <template>
+    <component-gridster id="grid"></component-gridster>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "component-remote",
+    destroy: function() {
+      this.$.grid.destroy();
+    },
+    addButton: function(data, sizeX, sizeY, column, row) {
+      var button = this.$.grid.add("<li></li>", sizeX, sizeY, column, row);
+      button.get(0).data = data;
+    },
+    setEditable: function(editable) {
+      this.$.grid.setEnabled(editable);
+      this.$.grid.setResizeable(editable);
+    },
+    _serialize_button: function(button, style) {
+      return {
+        data: button.get(0).data,
+        style: {
+          col: style.col,
+          row: style.row,
+          size_x: style.size_x,
+          size_y: style.size_y
+        }
+      }
+    },
+    load: function(ui) {
+      if (ui.type != "grid") {
+        console.error("invalid ui");
+        return;
+      }
+
+      var settings = ui.settings;
+      var config = {
+        widget_margins: settings.base_margin,
+        widget_base_dimensions: settings.base_dimension,
+        resize: {
+          enabled: true
+        },
+        serialize_params: this._serialize_button
+      };
+
+      this.$.grid.init(config);
+
+      var buttons = ui.buttons;
+      for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var style = button.style;
+        this.addButton(button.data, style.size_x, style.size_y, style.col, style.row);
+      }
+    },
+    save: function() {
+      var options = this.$.grid.getOptions();
+      var settings = {
+        base_margin: options.widget_margins,
+        base_dimension: options.widget_base_dimensions
+      };
+
+      var buttons = this.$.grid.serialize();
+
+      return {
+        type: "grid",
+        settings: settings,
+        buttons: buttons
+      };
+    }
+  });
+</script>

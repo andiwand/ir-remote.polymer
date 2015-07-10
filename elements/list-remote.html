@@ -1,0 +1,45 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-observer.html">
+<link rel="import" href="import-ir-client.html">
+<link rel="import" href="card-remote.html">
+
+<dom-module id="list-remote">
+  <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    card-remote {
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <template>
+    <div layout vertical center>
+      <template is="dom-repeat" items="{{remotes}}">
+        <card-remote remote="{{item}}"></card-remote>
+      </template>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  // TODO: generic list
+  Polymer({
+    is: "list-remote",
+    ready: function() {
+      this.remotes = [];
+
+      IR.remote.addObserver($.proxy(this._remoteReady, this));
+    },
+    _remoteReady: function() {
+      this.observer = new ArrayObserver(IR.remote.state.remotes);
+      this.observer.open(this._fire, this);
+      this._fire();
+    },
+    _fire: function() {
+      // TODO: alternatives?
+      this.remotes = IR.remote.state.remotes.slice();
+    }
+  });
+</script>

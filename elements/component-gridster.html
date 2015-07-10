@@ -1,0 +1,53 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="../elements/import-jquery.html">
+<link rel="import" href="../elements/import-gridster.html">
+
+<dom-module id="component-gridster">
+  <style>
+  </style>
+
+  <template>
+    <div class="gridster">
+      <ul id="gridster"></ul>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "component-gridster",
+    init: function(config) {
+      this.gridster = $(this.$.gridster).gridster(config).data("gridster");
+    },
+    destroy: function() {
+      this.gridster.remove_all_widgets();
+      this.gridster = null;
+    },
+    getOptions: function() {
+      return this.gridster.options;
+    },
+    setEnabled: function(enabled) {
+      if (enabled) {
+        this.gridster.enable();
+      } else {
+        this.gridster.disable();
+      }
+    },
+    setResizeable: function(resizeable) {
+      if (resizeable) {
+        this.gridster.enable_resize();
+      } else {
+        this.gridster.disable_resize();
+      }
+    },
+    add: function(html, sizeX, sizeY, column, row) {
+      return this.gridster.add_widget(html, sizeX, sizeY, column, row);
+    },
+    remove: function(element, callback) {
+      this.gridster.remove_widget(element, callback);
+    },
+    serialize: function() {
+      return this.gridster.serialize();
+    }
+  });
+</script>

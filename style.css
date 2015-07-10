@@ -1,0 +1,81 @@
+body {
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+}
+
+#left {
+  box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px,
+              rgba(0, 0, 0, 0.098) 0px 0px 3px;
+}
+
+paper-toolbar {
+  background-color: #03A9F4;
+  margin: 0px;
+}
+
+.page {
+  padding: 20px;
+}
+
+#edit-dialog {
+  padding: 24px;
+}
+
+.template {
+  display: none;
+}
+
+.control-button {
+  width: 70px;
+  height: 30px;
+}
+
+/*/
+/* gridster
+/*/
+
+.gridster {
+  opacity: .8;
+
+  -webkit-transition: opacity .6s;
+  -moz-transition: opacity .6s;
+  -o-transition: opacity .6s;
+  -ms-transition: opacity .6s;
+  transition: opacity .6s;
+}
+
+.gridster ul {
+  margin: 0;
+  padding: 0;
+
+  background-color: #F0F0F0;
+  list-style-type: none;
+}
+
+.gridster li {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 100%;
+}
+
+.gridster li:hover {
+  background: #E4E4E4;
+}
+
+.gridster .gs-w {
+  background: #DDD;
+  cursor: pointer;
+}
+
+.gridster .player {
+  background: #BBB;
+}
+
+.gridster .preview-holder {
+  border: none!important;
+  background: red!important;
+}

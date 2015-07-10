@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <title>IR-Remote</title>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <script src="libs/webcomponentsjs/webcomponents.js"></script>
+
+  <link rel="import" href="libs/polymer/polymer.html">
+  <link rel="import" href="libs/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="libs/iron-icons/iron-icons.html">
+  <link rel="import" href="libs/iron-icons/hardware-icons.html">
+  <link rel="import" href="libs/iron-icons/editor-icons.html">
+  <link rel="import" href="libs/iron-pages/iron-pages.html">
+  <link rel="import" href="libs/paper-styles/paper-styles.html">
+  <link rel="import" href="libs/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="libs/paper-menu/paper-menu.html">
+  <link rel="import" href="libs/paper-item/paper-item.html">
+  <link rel="import" href="libs/paper-header-panel/paper-header-panel.html">
+  <link rel="import" href="libs/paper-drawer-panel/paper-drawer-panel.html">
+  <link rel="import" href="libs/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="libs/paper-tabs/paper-tabs.html">
+  <link rel="import" href="libs/paper-button/paper-button.html">
+  <link rel="import" href="libs/paper-toggle-button/paper-toggle-button.html">
+  <link rel="import" href="libs/paper-dialog/paper-dialog.html">
+  <link rel="import" href="libs/paper-spinner/paper-spinner.html">
+  <link rel="import" href="libs/paper-progress/paper-progress.html">
+  <link rel="import" href="elements/import-jquery.html">
+  <link rel="import" href="elements/list-remote.html">
+  <link rel="import" href="elements/list-device.html">
+  <link rel="import" href="elements/dialog-remote.html">
+  <link rel="import" href="elements/component-remote.html">
+
+  <script type="text/javascript" src="script.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body class="layout vertical" unresolved>
+  <dialog-remote id="dialog-remote"></dialog-remote>
+
+  <iron-pages id="pages" attrForSelected="name">
+    <div name="main">
+      <paper-drawer-panel>
+        <paper-header-panel id="left" drawer>
+          <paper-toolbar>
+            <span>Menu</span>
+          </paper-toolbar>
+          <paper-menu id="main-menu" attrForSelected="name" pages="main-pages">
+            <paper-item class="side-menu" name="remotes" onclick="menuSelect(this)">Remotes</paper-item>
+            <paper-item class="side-menu" name="devices" onclick="menuSelect(this)">Devices</paper-item>
+            <hr/>
+            <paper-item class="side-menu" name="settings" onclick="menuSelect(this)">Settings</paper-item>
+            <paper-item class="side-menu" name="about" onclick="menuSelect(this)">About</paper-item>
+          </paper-menu>
+        </paper-header-panel>
+        <iron-pages id="main-pages" attrForSelected="name" main>
+          <div name="remotes">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <span class="title">Remotes</span>
+                <paper-icon-button icon="add-circle" onclick="openRemoteDialog()"></paper-icon-button>
+              </paper-toolbar>
+            </paper-header-panel>
+
+            <div class="page">
+              <list-remote id="list-remote"></list-remote>
+            </div>
+          </div>
+          <div name="devices">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div class="title">Devices</div>
+                <paper-spinner active></paper-spinner>
+              </paper-toolbar>
+            </paper-header-panel>
+
+            <div class="page">
+              <list-device id="list-device"></list-device>
+            </div>
+          </div>
+          <div name="settings">
+            <paper-header-panel>
+              <paper-toolbar>
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div class="title">Settings</div>
+              </paper-toolbar>
+            </paper-header-panel>
+          </div>
+        </iron-pages>
+      </paper-drawer-panel>
+    </div>
+    <div name="remote">
+      <paper-header-panel>
+        <paper-toolbar>
+          <paper-icon-button icon="arrow-back" onclick="remoteBack()"></paper-icon-button>
+          <div id="remote-title" class="title">Remote</div>
+          <paper-icon-button id="remote-cast" icon="hardware:cast"></paper-icon-button>
+          <paper-icon-button id="remote-add" icon="add-circle" onclick="remoteAddButton()"></paper-icon-button>
+          <paper-icon-button id="remote-edit" icon="editor:mode-edit" onclick="remoteStartEdit()"></paper-icon-button>
+          <paper-icon-button id="remote-save" icon="done" onclick="remoteEndEdit()"></paper-icon-button>
+        </paper-toolbar>
+      </paper-header-panel>
+
+      <div class="page">
+        <component-remote id="remote"></component-remote>
+      </div>
+    </div>
+  </iron-pages>
+</body>
+</html>
