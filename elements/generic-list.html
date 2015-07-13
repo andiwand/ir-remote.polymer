@@ -27,7 +27,7 @@
       if (this._observer) this._observer.close();
       if (!newValue) return;
       this._observer = new ArrayObserver(newValue);
-      this._observer.open(this._rebuild, this);
+      this._observer.open(this._rebuild, this); // TODO: incremental update
       this._rebuild();
     },
     _rebuild: function() {
