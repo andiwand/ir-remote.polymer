@@ -1,0 +1,20 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+
+<script>
+  var andiwand = andiwand || {};
+
+  andiwand.EditBehavior = {
+    set: function(values) {
+      $.each(this.properties, $.proxy(function(key, value) {
+        if (!value.copy) return;
+        this[key] = values ? values[key] : value.value;
+      }, this));
+    },
+    get: function(values) {
+      $.each(this.properties, $.proxy(function(key, value) {
+        if (!value.copy) return;
+        values[key] = this[key];
+      }, this));
+    },
+  };
+</script>

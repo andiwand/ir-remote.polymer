@@ -1,0 +1,43 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-observe.html">
+
+<dom-module id="generic-list">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+
+  <template>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "generic-list",
+    properties: {
+      array: {
+        type: Array,
+        notify: true,
+        observer: "_arrayChanged"
+      },
+      element: String
+    },
+    _arrayChanged: function(newValue, oldValue) {
+      if (this._observer) this._observer.close();
+      if (!newValue) return;
+      this._observer = new ArrayObserver(newValue);
+      this._observer.open(this._rebuild, this);
+      this._rebuild();
+    },
+    _rebuild: function() {
+      $(this).empty();
+      $.each(this.array, $.proxy(function(i, e) {
+        $(this).append(
+          $("<%></%>".replace("%", this.element))
+            .prop("data", e)
+        );
+      }, this));
+    }
+  });
+</script>

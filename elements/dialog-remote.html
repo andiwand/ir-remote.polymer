@@ -2,6 +2,7 @@
 <link rel="import" href="../libs/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../libs/paper-input/paper-input.html">
 <link rel="import" href="../libs/paper-button/paper-button.html">
+<link rel="import" href="behavior-edit.html">
 
 <dom-module id="dialog-remote">
   <link rel="import" type="css" href="../libs/paper-dialog-behavior/paper-dialog-common.css">
@@ -23,37 +24,21 @@
 <script>
   Polymer({
     is: "dialog-remote",
-    behaviors: [ Polymer.PaperDialogBehavior ],
+    behaviors: [ Polymer.PaperDialogBehavior, andiwand.EditBehavior ],
     properties: {
       name: {
         type: String,
-        notify: true,
         value: "",
         copy: true
       },
       description: {
         type: String,
-        notify: true,
         value: "",
         copy: true
       }
     },
     ready: function() {
       this.modal = true;
-    },
-    set: function(values) {
-      var that = this;
-      $.each(that.properties, function(key, value) {
-        if (!value.copy) return;
-        that[key] = values ? values[key] : value.value;
-      });
-    },
-    get: function(values) {
-      var that = this;
-      $.each(that.properties, function(key, value) {
-        if (!value.copy) return;
-        values[key] = that[key];
-      });
     },
     cancel: function() {
       this.close();
