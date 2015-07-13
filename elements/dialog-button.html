@@ -3,26 +3,32 @@
 <link rel="import" href="../libs/paper-input/paper-input.html">
 <link rel="import" href="../libs/paper-button/paper-button.html">
 
-<dom-module id="dialog-remote">
+<dom-module id="dialog-button">
   <link rel="import" type="css" href="../libs/paper-dialog-behavior/paper-dialog-common.css">
 
   <style>
   </style>
 
   <template>
-    <h2>Edit remote</h2>
+    <h2>Edit button</h2>
     <paper-input label="Name" value="{{name}}"></paper-input>
     <paper-input label="Description" value="{{description}}"></paper-input>
+    <paper-input label="Short" value="{{short}}"></paper-input>
+    <hr/>
+    <p>Protocol: <span>{{frame.protocol}}</span></p>
+    <p>Data: <span>{{frameData(frame.data)}}</span></p>
+    <paper-button on-tap="receive">Receive</paper-button>
+    <hr/>
     <div>
       <paper-button on-tap="cancel">Cancel</paper-button>
-      <paper-button on-tap="onAccept">Accept</paper-button>
+      <paper-button on-tap="accept">Accept</paper-button>
     </div>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "dialog-remote",
+    is: "dialog-button",
     behaviors: [ Polymer.PaperDialogBehavior ],
     properties: {
       name: {
@@ -36,29 +42,33 @@
         notify: true,
         value: "",
         copy: true
+      },
+      short: {
+        type: String,
+        notify: true,
+        value: "",
+        copy: true
+      },
+      frame: {
+        type: Object,
+        notify: true,
+        value: {},
+        copy: true
       }
     },
     ready: function() {
       this.modal = true;
     },
-    set: function(values) {
-      var that = this;
-      $.each(that.properties, function(key, value) {
-        if (!value.copy) return;
-        that[key] = values ? values[key] : value.value;
-      });
+    frameData: function(data) {
+      return JSON.stringify(data);
     },
-    get: function(values) {
-      var that = this;
-      $.each(that.properties, function(key, value) {
-        if (!value.copy) return;
-        values[key] = that[key];
-      });
+    receive: function() {
+      console.log("receive");
     },
     cancel: function() {
       this.close();
     },
-    onAccept: function() {
+    accept: function() {
       this.fire("accept", this);
     }
   });

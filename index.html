@@ -27,10 +27,14 @@
   <link rel="import" href="libs/paper-spinner/paper-spinner.html">
   <link rel="import" href="libs/paper-progress/paper-progress.html">
   <link rel="import" href="elements/import-jquery.html">
+  <link rel="import" href="elements/import-ir-client.html">
+  <link rel="import" href="elements/import-ir-remote.html">
   <link rel="import" href="elements/list-remote.html">
   <link rel="import" href="elements/list-device.html">
   <link rel="import" href="elements/dialog-remote.html">
-  <link rel="import" href="elements/component-remote.html">
+  <link rel="import" href="elements/dialog-button.html">
+  <link rel="import" href="elements/dialog-cast.html">
+  <link rel="import" href="elements/remote-container.html">
 
   <script type="text/javascript" src="script.js"></script>
 
@@ -39,6 +43,8 @@
 
 <body class="layout vertical" unresolved>
   <dialog-remote id="dialog-remote"></dialog-remote>
+  <dialog-button id="dialog-button"></dialog-button>
+  <dialog-cast id="dialog-cast"></dialog-cast>
 
   <iron-pages id="pages" attrForSelected="name">
     <div name="main">
@@ -98,7 +104,7 @@
         <paper-toolbar>
           <paper-icon-button icon="arrow-back" onclick="remoteBack()"></paper-icon-button>
           <div id="remote-title" class="title">Remote</div>
-          <paper-icon-button id="remote-cast" icon="hardware:cast"></paper-icon-button>
+          <paper-icon-button id="remote-cast" icon="hardware:cast" onclick="remoteCast()"></paper-icon-button>
           <paper-icon-button id="remote-add" icon="add-circle" onclick="remoteAddButton()"></paper-icon-button>
           <paper-icon-button id="remote-edit" icon="editor:mode-edit" onclick="remoteStartEdit()"></paper-icon-button>
           <paper-icon-button id="remote-save" icon="done" onclick="remoteEndEdit()"></paper-icon-button>
@@ -106,7 +112,7 @@
       </paper-header-panel>
 
       <div class="page">
-        <component-remote id="remote"></component-remote>
+        <remote-container id="remote"></remote-container>
       </div>
     </div>
   </iron-pages>

@@ -9,7 +9,6 @@
           "name": "power",
           "description": "blablabla this is so blablabla command bla.",
           "short": "pwr",
-          "icon": "",
           "frame": {
             "protocol": "nec",
             "data": 1234567
@@ -24,8 +23,8 @@
         },
         "buttons": [
           {
-            "data": 0,
-            "style": {
+            "command": 0,
+            "layout": {
               "col": 5,
               "row": 5,
               "size_x": 2,

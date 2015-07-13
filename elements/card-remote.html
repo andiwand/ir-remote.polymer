@@ -1,10 +1,7 @@
 <link rel="import" href="../libs/polymer/polymer.html">
-<<<<<<< HEAD
-=======
-<link rel="import" href="../libs/iron-flex-layout/iron-flex-layout.html">
->>>>>>> 3ffbbf2ee7efa1e28121b6a6822453c6990cc012
 <link rel="import" href="../libs/iron-icons/iron-icons.html">
 <link rel="import" href="../libs/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="import-observe.html">
 
 <dom-module id="card-remote">
   <style>
@@ -30,12 +27,12 @@
 
   <template>
     <div class="card-header layout horizontal">
-      <span class="heading flex">{{remote.name}}</span>
+      <span class="heading flex">{{data.name}}</span>
       <paper-icon-button icon="open-in-new" on-tap="onOpen"></paper-icon-button>
       <paper-icon-button icon="create" on-tap="onEdit"></paper-icon-button>
       <paper-icon-button icon="delete" on-tap="onRemove"></paper-icon-button>
     </div>
-    <p>{{remote.description}}</p>
+    <p>{{data.description}}</p>
   </template>
 </dom-module>
 
@@ -43,27 +40,30 @@
   Polymer({
     is: "card-remote",
     properties: {
-      remote: {
+      data: {
         type: Object,
-        notify: true
+        notify: true,
+        observer: "_dataChanged"
       }
     },
-    ready: function() {
-      this.observer = new ObjectObserver(this.remote);
+    _dataChanged: function(newValue, oldValue) {
+      if (this.observer) this.observer.close();
+      if (!newValue) return;
+      this.observer = new ObjectObserver(newValue);
       this.observer.open(function(added, removed, changed, getOldValueFn) {
         $.each(changed, $.proxy(function(key, value) {
-          this.notifyPath("remote." + key, value);
+          this.notifyPath("data." + key, value);
         }, this));
       }, this);
     },
     onOpen: function() {
-      this.fire("open", this.remote, this);
+      this.fire("open", this.data, this);
     },
     onEdit: function() {
-      this.fire("edit", this.remote, this);
+      this.fire("edit", this.data, this);
     },
     onRemove: function() {
-      this.fire("remove", this.remote, this);
+      this.fire("remove", this.data, this);
     }
   });
 </script>

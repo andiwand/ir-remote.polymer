@@ -1,0 +1,38 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-observe.html">
+
+<script>
+  Polymer({
+    is: "observe-path",
+    properties: {
+      data: {
+        type: Object,
+        notify: true,
+        observer: "_dataChanged"
+      },
+      path: String,
+      value: {
+        type: Object,
+        notify: true,
+        computed: "getValue(dummy)"
+      }
+    },
+    _fire: function(newValue, oldValue) {
+      this.notifyPath("value", newValue);
+    },
+    _dataChanged: function(newValue, oldValue) {
+      if (this._observer) this._observer.close();
+      if (!newValue) return;
+      if (!this.path) return;
+      this._observer = new PathObserver(newValue, this.path);
+      this._observer.open($.proxy(function(newValue, oldValue) {
+        this._fire(newValue, oldValue);
+      }), this);
+
+      this._fire(Object.byPath(newValue, this.path), undefined);
+    },
+    getValue: function() {
+      return this.value;
+    }
+  });
+</script>

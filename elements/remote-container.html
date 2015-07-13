@@ -1,8 +1,25 @@
 <link rel="import" href="../libs/polymer/polymer.html">
 <link rel="import" href="component-gridster.html">
+<link rel="import" href="remote-button.html">
 
-<dom-module id="component-remote">
+<dom-module id="remote-container">
   <style>
+    #grid /deep/ ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    #grid /deep/ .preview-holder {
+      border: none!important;
+      background: red!important;
+    }
+
+    #grid /deep/ .button {
+      background-color: grey;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 
   <template>
@@ -12,26 +29,27 @@
 
 <script>
   Polymer({
-    is: "component-remote",
+    is: "remote-container",
     destroy: function() {
       this.$.grid.destroy();
     },
     addButton: function(data, sizeX, sizeY, column, row) {
-      var button = this.$.grid.add("<li></li>", sizeX, sizeY, column, row);
+      var element = '<li><remote-button class="button"></remote-button></li>';
+      var button = this.$.grid.add(element, sizeX, sizeY, column, row);
       button.get(0).data = data;
     },
     setEditable: function(editable) {
       this.$.grid.setEnabled(editable);
       this.$.grid.setResizeable(editable);
     },
-    _serialize_button: function(button, style) {
+    _serialize_button: function(button, layout) {
       return {
         data: button.get(0).data,
-        style: {
-          col: style.col,
-          row: style.row,
-          size_x: style.size_x,
-          size_y: style.size_y
+        layout: {
+          col: layout.col,
+          row: layout.row,
+          size_x: layout.size_x,
+          size_y: layout.size_y
         }
       }
     },
@@ -56,8 +74,8 @@
       var buttons = ui.buttons;
       for (var i = 0; i < buttons.length; i++) {
         var button = buttons[i];
-        var style = button.style;
-        this.addButton(button.data, style.size_x, style.size_y, style.col, style.row);
+        var layout = button.layout;
+        this.addButton(button.data, layout.size_x, layout.size_y, layout.col, layout.row);
       }
     },
     save: function() {

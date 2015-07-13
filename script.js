@@ -173,6 +173,11 @@ function openRemote(remote) {
   remoteSetEditable(false);
 }
 
+function remoteCast() {
+  var dialog = document.getElementById("dialog-cast");
+  dialog.open();
+}
+
 function remoteBack() {
   document.getElementById("remote").destroy();
 
