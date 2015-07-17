@@ -1,4 +1,5 @@
 <link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="import-commons.html">
 <link rel="import" href="import-observe.html">
 
 <script>
@@ -29,7 +30,7 @@
         this._fire(newValue, oldValue);
       }), this);
 
-      this._fire(Object.byPath(newValue, this.path), undefined);
+      this._fire(andiwand.byPath(newValue, this.path), undefined);
     },
     getValue: function() {
       return this.value;

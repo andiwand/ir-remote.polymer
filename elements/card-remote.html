@@ -1,7 +1,7 @@
 <link rel="import" href="../libs/polymer/polymer.html">
 <link rel="import" href="../libs/iron-icons/iron-icons.html">
 <link rel="import" href="../libs/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="import-observe.html">
+<link rel="import" href="observe-path.html">
 
 <dom-module id="card-remote">
   <style>
@@ -26,13 +26,16 @@
   </style>
 
   <template>
+    <observe-path data="{{data}}" path="name" value="{{name}}"></observe-path>
+    <observe-path data="{{data}}" path="description" value="{{description}}"></observe-path>
+
     <div class="card-header layout horizontal">
-      <span class="heading flex">{{data.name}}</span>
+      <span class="heading flex">{{name}}</span>
       <paper-icon-button icon="open-in-new" on-tap="onOpen"></paper-icon-button>
       <paper-icon-button icon="create" on-tap="onEdit"></paper-icon-button>
       <paper-icon-button icon="delete" on-tap="onRemove"></paper-icon-button>
     </div>
-    <p>{{data.description}}</p>
+    <p>{{description}}</p>
   </template>
 </dom-module>
 
@@ -42,19 +45,8 @@
     properties: {
       data: {
         type: Object,
-        notify: true,
-        observer: "_dataChanged"
+        notify: true
       }
-    },
-    _dataChanged: function(newValue, oldValue) {
-      if (this.observer) this.observer.close();
-      if (!newValue) return;
-      this.observer = new ObjectObserver(newValue);
-      this.observer.open(function(added, removed, changed, getOldValueFn) {
-        $.each(changed, $.proxy(function(key, value) {
-          this.notifyPath("data." + key, value);
-        }, this));
-      }, this);
     },
     onOpen: function() {
       this.fire("open", this.data, this);

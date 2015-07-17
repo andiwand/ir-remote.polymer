@@ -79,6 +79,7 @@ function remoteSetEditable(editable) {
   $("#remote-save").attr("hidden", !editable);
 
   document.getElementById("remote").setEditable(editable);
+  document.getElementById("remote").setEnabled(!editable);
 
   remoteEditable = editable;
 }
