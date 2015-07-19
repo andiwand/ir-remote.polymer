@@ -1,18 +1,21 @@
 <link rel="import" href="../libs/polymer/polymer.html">
 <link rel="import" href="global-variable.html">
-<link rel="import" href="page-main.html">
-<link rel="import" href="page-remote.html">
+<link rel="import" href="app-page-main.html">
+<link rel="import" href="app-page-remote.html">
 
-<dom-module id="ir-main">
+<dom-module id="app-main">
   <style>
+    /deep/ .page {
+      padding: 20px;
+    }
   </style>
 
   <template>
     <global-variable id="global" key="main"></global-variable>
 
     <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
-      <page-main id="main" name="main"></page-main>
-      <page-remote id="remote" name="remote"></page-remote>
+      <app-page-main id="main" name="main"></app-page-main>
+      <app-page-remote id="remote" name="remote"></app-page-remote>
     </iron-pages>
   </template>
 </dom-module>
@@ -30,7 +33,7 @@ $(function() {
 });
 
   Polymer({
-    is: "ir-main",
+    is: "app-main",
     properties: {
       page: {
         type: String,

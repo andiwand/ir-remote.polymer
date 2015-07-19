@@ -16,8 +16,12 @@
 <link rel="import" href="list-device.html">
 <link rel="import" href="dialog-remote.html">
 
-<dom-module id="page-main">
+<dom-module id="app-page-main">
   <style>
+    #left {
+      box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px,
+                  rgba(0, 0, 0, 0.098) 0px 0px 3px;
+    }
   </style>
 
   <template>
@@ -81,7 +85,7 @@
 
 <script>
   Polymer({
-    is: "page-main",
+    is: "app-page-main",
     properties: {
       page: {
         type: String,

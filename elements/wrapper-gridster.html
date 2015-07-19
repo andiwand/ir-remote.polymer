@@ -2,7 +2,7 @@
 <link rel="import" href="../elements/import-jquery.html">
 <link rel="import" href="../elements/import-gridster.html">
 
-<dom-module id="component-gridster">
+<dom-module id="wrapper-gridster">
   <style>
   </style>
 
@@ -15,7 +15,7 @@
 
 <script>
   Polymer({
-    is: "component-gridster",
+    is: "wrapper-gridster",
     init: function(config) {
       this.gridster = $(".gridster > ul").gridster(config).data("gridster");
     },
