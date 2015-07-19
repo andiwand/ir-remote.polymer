@@ -1,0 +1,45 @@
+<link rel="import" href="../libs/polymer/polymer.html">
+<link rel="import" href="global-variable.html">
+<link rel="import" href="page-main.html">
+<link rel="import" href="page-remote.html">
+
+<dom-module id="ir-main">
+  <style>
+  </style>
+
+  <template>
+    <global-variable id="global" key="main"></global-variable>
+
+    <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
+      <page-main id="main" name="main"></page-main>
+      <page-remote id="remote" name="remote"></page-remote>
+    </iron-pages>
+  </template>
+</dom-module>
+
+<script>
+// TODO: remove
+IR.interface.load = function(callback) {
+  $.getJSON("config.json", function(data) {
+    callback(data);
+  });
+};
+
+$(function() {
+  IR.remote.init();
+});
+
+  Polymer({
+    is: "ir-main",
+    properties: {
+      page: {
+        type: String,
+        notify: true,
+        value: "main"
+      }
+    },
+    ready: function() {
+      this.$.global.value = this;
+    }
+  });
+</script>
