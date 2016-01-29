@@ -15,7 +15,7 @@
     <paper-input label="Name" value="{{name}}"></paper-input>
     <paper-input label="Description" value="{{description}}"></paper-input>
     <div>
-      <paper-button on-tap="cancel">Cancel</paper-button>
+      <paper-button on-tap="onCancel">Cancel</paper-button>
       <paper-button on-tap="onAccept">Accept</paper-button>
     </div>
   </template>
@@ -40,7 +40,7 @@
     ready: function() {
       this.modal = true;
     },
-    cancel: function() {
+    onCancel: function() {
       this.close();
     },
     onAccept: function() {

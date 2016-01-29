@@ -25,8 +25,8 @@
     <paper-button on-tap="receive">Receive</paper-button>
     <hr/>
     <div>
-      <paper-button on-tap="cancel">Cancel</paper-button>
-      <paper-button on-tap="accept">Accept</paper-button>
+      <paper-button on-tap="onCancel">Cancel</paper-button>
+      <paper-button on-tap="onAccept">Accept</paper-button>
     </div>
   </template>
 </dom-module>
@@ -70,10 +70,10 @@
     receive: function() {
       console.log("receive");
     },
-    cancel: function() {
+    onCancel: function() {
       this.close();
     },
-    accept: function() {
+    onAccept: function() {
       this.fire("accept", this);
     }
   });

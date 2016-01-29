@@ -115,6 +115,7 @@
     openRemoteDialog: function(remote) {
       var dialog = this.$["dialog-remote"];
 
+      // TODO: get rid of this stuff; just use .open(remote)
       dialog.set(remote);
       dialog.remote = remote;
       dialog.open();
