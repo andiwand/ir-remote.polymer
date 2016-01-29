@@ -29,12 +29,12 @@
     <global-variable key="main" value="{{main}}"></global-variable>
     <global-variable key="page-remote" value="{{pageRemote}}"></global-variable>
 
-    <dialog-remote id="dialog-remote" on-accept="remoteDialogAccept"></dialog-remote>
+    <dialog-remote id="dialog-remote" on-accept="onAcceptRemoteDialog"></dialog-remote>
 
     <paper-drawer-panel>
       <paper-header-panel id="left" drawer>
         <paper-toolbar>
-          <span>Menu</span>
+          <div>Menu</div>
         </paper-toolbar>
         <paper-menu selected="{{page}}" attr-for-selected="name">
           <paper-item name="remotes">Remotes</paper-item>
@@ -50,8 +50,8 @@
           <paper-header-panel>
             <paper-toolbar>
               <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-              <span class="title">Remotes</span>
-              <paper-icon-button icon="add-circle" on-click="remoteDialogOpen"></paper-icon-button>
+              <div class="title">Remotes</div>
+              <paper-icon-button icon="add-circle" on-click="onNew"></paper-icon-button>
             </paper-toolbar>
           </paper-header-panel>
           <div class="page">
@@ -97,8 +97,9 @@
       this.$.global.value = this;
     },
     onOpen: function(event) { this.open(event.detail); },
-    onEdit: function(event) { this.edit(event.detail); },
+    onEdit: function(event) { this.openRemoteDialog(event.detail); },
     onRemove: function(event) { this.remove(event.detail); },
+    onNew: function() { this.openRemoteDialog(null); },
     open: function(remote) {
       $("#remote-title").text(remote.name);
 
@@ -107,21 +108,18 @@
       this.pageRemote.load(remote);
       this.pageRemote.setEditable(false);
     },
-    edit: function(remote) {
-      this.remoteDialogOpen(remote);
-    },
     remove: function(remote) {
       var index = $.inArray(remote, IR.remote.state.remotes);
       IR.remote.state.remotes.splice(index, 1);
     },
-    remoteDialogOpen: function(remote) {
+    openRemoteDialog: function(remote) {
       var dialog = this.$["dialog-remote"];
 
       dialog.set(remote);
       dialog.remote = remote;
       dialog.open();
     },
-    remoteDialogAccept: function() {
+    onAcceptRemoteDialog: function() {
       var dialog = this.$["dialog-remote"];
       var remote = dialog.remote ? dialog.remote : {};
 

@@ -21,17 +21,6 @@
 </dom-module>
 
 <script>
-// TODO: remove
-IR.interface.load = function(callback) {
-  $.getJSON("config.json", function(data) {
-    callback(data);
-  });
-};
-
-$(function() {
-  IR.remote.init();
-});
-
   Polymer({
     is: "app-main",
     properties: {

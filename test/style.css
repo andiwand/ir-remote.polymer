@@ -2,6 +2,8 @@ body {
   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-touch-callout: none;
+}
+
+body /deep/ paper-toolbar {
+  color: white !important;
 }
