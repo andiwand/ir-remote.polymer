@@ -26,8 +26,8 @@
   </style>
 
   <template>
-    <observe-path data="{{data}}" path="name" value="{{name}}"></observe-path>
-    <observe-path data="{{data}}" path="description" value="{{description}}"></observe-path>
+    <observe-path object="{{data}}" path="name" value="{{name}}"></observe-path>
+    <observe-path object="{{data}}" path="description" value="{{description}}"></observe-path>
 
     <div class="card-header layout horizontal">
       <span class="heading flex">{{name}}</span>
@@ -48,14 +48,8 @@
         notify: true
       }
     },
-    onOpen: function() {
-      this.fire("open", this.data, this);
-    },
-    onEdit: function() {
-      this.fire("edit", this.data, this);
-    },
-    onRemove: function() {
-      this.fire("remove", this.data, this);
-    }
+    onOpen: function() { this.fire("open", this.data); },
+    onEdit: function() { this.fire("edit", this.data); },
+    onRemove: function() { this.fire("remove", this.data); }
   });
 </script>

@@ -1,15 +1,7 @@
 {
-  "name": "ir-remote",
+  "name": "ir-remote.polymer",
   "version": "0.0.1",
-  "dependencies": {
-    "jquery": "git+https://github.com/jquery/jquery.git",
-    "gridster": "git+https://github.com/ducksboard/gridster.js.git",
-    "polymer": "Polymer/polymer#^1.0.0",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.0",
-    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
-    "observe-js": "git+https://github.com/Polymer/observe-js",
-    "commons.js": "git+https://github.com/andiwand/commons.js.git",
-    "ir-client.js": "git+https://github.com/andiwand/ir-client.js.git",
-    "ir-remote.js": "git+https://github.com/andiwand/ir-remote.js.git"
+  "devDependencies": {
+    "polyserve": "~0.5.0"
   }
 }

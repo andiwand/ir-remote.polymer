@@ -1,5 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="import-observe.html">
+<link rel="import" href="observe-array.html">
 
 <dom-module id="list-generic">
   <style>
@@ -9,6 +9,7 @@
   </style>
 
   <template>
+    <observe-array array="{{array}}" on-changed="_onChanged"></observer-array>
   </template>
 </dom-module>
 
@@ -18,16 +19,12 @@
     properties: {
       array: {
         type: Array,
-        notify: true,
-        observer: "_arrayChanged"
+        notify: true
       },
       element: String
     },
-    _arrayChanged: function(newValue, oldValue) {
-      if (this._observer) this._observer.close();
-      if (!newValue) return;
-      this._observer = new ArrayObserver(newValue);
-      this._observer.open(this._rebuild, this); // TODO: incremental update
+    _onChanged: function(event, detail) {
+      // TODO: incremental update
       this._rebuild();
     },
     _rebuild: function() {

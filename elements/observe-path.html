@@ -6,22 +6,24 @@
   Polymer({
     is: "observe-path",
     properties: {
-      data: {
+      object: {
         type: Object,
         notify: true,
-        observer: "_onRootChanged"
+        observer: "_onObjectChanged"
       },
       path: String,
       value: {
         type: Object,
-        notify: true,
-        computed: "getValue(dummy)"
+        notify: true
       }
+    },
+    ready: function() {
+      this._onObjectChanged(this.object, undefined);
     },
     _fire: function(newValue, oldValue) {
       this.notifyPath("value", newValue);
     },
-    _onRootChanged: function(newValue, oldValue) {
+    _onObjectChanged: function(newValue, oldValue) {
       if (this._observer) this._observer.close();
       if (!newValue) return;
       if (!this.path) return;
@@ -38,9 +40,6 @@
       }), this);
 
       this._fire(andiwand.byPath(observable, this.path), undefined);
-    },
-    getValue: function() {
-      return this.value;
     }
   });
 </script>
