@@ -14,17 +14,14 @@
   </style>
 
   <template>
+    <observe-path data="{{ir.remote}}" path="devices" value="{{devices}}"></observe-path>
+
     <list-generic array="{{devices}}" element="card-device"></list-generic>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "list-device",
-    ready: function() {
-      IR.remote.addObserver($.proxy(function() {
-        this.devices = IR.remote.state.devices;
-      }, this));
-    }
+    is: "list-device"
   });
 </script>

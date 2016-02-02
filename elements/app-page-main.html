@@ -109,8 +109,8 @@
       this.pageRemote.setEditable(false);
     },
     remove: function(remote) {
-      var index = $.inArray(remote, IR.remote.state.remotes);
-      IR.remote.state.remotes.splice(index, 1);
+      var index = $.inArray(remote, ir.remote.remotes);
+      ir.remote.remotes.splice(index, 1);
     },
     openRemoteDialog: function(remote) {
       var dialog = this.$["dialog-remote"];
@@ -137,7 +137,7 @@
         }
       });
 
-      if (!dialog.remote) IR.remote.state.remotes.push(remote);
+      if (!dialog.remote) ir.remote.remotes.push(remote);
 
       dialog.close();
     }
