@@ -9,7 +9,7 @@
       data: {
         type: Object,
         notify: true,
-        observer: "_dataChanged"
+        observer: "_onRootChanged"
       },
       path: String,
       value: {
@@ -21,16 +21,23 @@
     _fire: function(newValue, oldValue) {
       this.notifyPath("value", newValue);
     },
-    _dataChanged: function(newValue, oldValue) {
+    _onRootChanged: function(newValue, oldValue) {
       if (this._observer) this._observer.close();
       if (!newValue) return;
       if (!this.path) return;
-      this._observer = new PathObserver(newValue, this.path);
+
+      var observable = newValue;
+      if (andiwand.isString(newValue)) {
+        observable = andiwand.byPath(window, newValue);
+        if (!observable) return;
+      }
+
+      this._observer = new PathObserver(observable, this.path);
       this._observer.open($.proxy(function(newValue, oldValue) {
         this._fire(newValue, oldValue);
       }), this);
 
-      this._fire(andiwand.byPath(newValue, this.path), undefined);
+      this._fire(andiwand.byPath(observable, this.path), undefined);
     },
     getValue: function() {
       return this.value;
