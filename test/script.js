@@ -1,4 +1,3 @@
-
 IR.interface.load = function(callback) {
   $.getJSON("config.json", function(data) {
     callback(data);
