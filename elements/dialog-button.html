@@ -1,5 +1,6 @@
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../../paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../paper-input/paper-input.html">
 <link rel="import" href="../../paper-button/paper-button.html">
 <link rel="import" href="behavior-edit.html">
@@ -16,15 +17,17 @@
   <template>
     <h2>Edit button</h2>
     <hr/>
-    <paper-input label="Name" value="{{name}}"></paper-input>
-    <paper-input label="Description" value="{{description}}"></paper-input>
-    <paper-input label="Short" value="{{short}}"></paper-input>
+    <paper-dialog-scrollable>
+      <paper-input label="Name" value="{{name}}"></paper-input>
+      <paper-input label="Description" value="{{description}}"></paper-input>
+      <paper-input label="Short" value="{{short}}"></paper-input>
+      <hr/>
+      <p>Protocol: <span>{{frame.protocol}}</span></p>
+      <p>Data: <span>{{frameData(frame.data)}}</span></p>
+      <paper-button on-tap="receive">Receive</paper-button>
+    </paper-dialog-scrollable>
     <hr/>
-    <p>Protocol: <span>{{frame.protocol}}</span></p>
-    <p>Data: <span>{{frameData(frame.data)}}</span></p>
-    <paper-button on-tap="receive">Receive</paper-button>
-    <hr/>
-    <div>
+    <div class="buttons">
       <paper-button on-tap="onCancel">Cancel</paper-button>
       <paper-button on-tap="onAccept">Accept</paper-button>
     </div>
