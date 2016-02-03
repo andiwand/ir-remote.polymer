@@ -7,6 +7,7 @@
     "polymer": "Polymer/polymer#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "more-routing": "Polymore/more-routing",
     "observe-js": "git+https://github.com/Polymer/observe-js",
     "commons.js": "git+https://github.com/andiwand/commons.js.git",
     "ir-client.js": "git+https://github.com/andiwand/ir-client.js.git",

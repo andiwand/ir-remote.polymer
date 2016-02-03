@@ -10,13 +10,13 @@
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
-<link rel="import" href="import-jquery.html">
-<link rel="import" href="global-variable.html">
-<link rel="import" href="list-remote.html">
-<link rel="import" href="list-device.html">
-<link rel="import" href="dialog-remote.html">
+<link rel="import" href="../elements/import-jquery.html">
+<link rel="import" href="../elements/global-variable.html">
+<link rel="import" href="../elements/list-remote.html">
+<link rel="import" href="../elements/list-device.html">
+<link rel="import" href="../elements/dialog-remote.html">
 
-<dom-module id="app-page-main">
+<dom-module id="app-page-root">
   <style>
     #left {
       box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px,
@@ -25,6 +25,8 @@
   </style>
 
   <template>
+    <more-route context name="root"></more-route>
+
     <global-variable id="global" key="page-main"></global-variable>
     <global-variable key="main" value="{{main}}"></global-variable>
     <global-variable key="page-remote" value="{{pageRemote}}"></global-variable>
@@ -85,7 +87,7 @@
 
 <script>
   Polymer({
-    is: "app-page-main",
+    is: "app-page-root",
     properties: {
       page: {
         type: String,

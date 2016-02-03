@@ -1,7 +1,8 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="global-variable.html">
-<link rel="import" href="app-page-main.html">
+<link rel="import" href="../elements/global-variable.html">
+<link rel="import" href="app-page-root.html">
 <link rel="import" href="app-page-remote.html">
+<link rel="import" href="routes.html">
 
 <dom-module id="app-main">
   <style>
@@ -13,10 +14,12 @@
   <template>
     <global-variable id="global" key="main"></global-variable>
 
-    <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
-      <app-page-main id="main" name="main"></app-page-main>
-      <app-page-remote id="remote" name="remote"></app-page-remote>
-    </iron-pages>
+    <more-route-selector>
+      <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
+        <app-page-root id="main" name="main"></app-page-root>
+        <app-page-remote id="remote" name="remote"></app-page-remote>
+      </iron-pages>
+    </more-route-selector>
   </template>
 </dom-module>
 

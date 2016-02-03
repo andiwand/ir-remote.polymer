@@ -6,17 +6,19 @@
 <link rel="import" href="../../paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="import-jquery.html">
-<link rel="import" href="global-variable.html">
-<link rel="import" href="dialog-button.html">
-<link rel="import" href="dialog-cast.html">
-<link rel="import" href="remote-container.html">
+<link rel="import" href="../elements/import-jquery.html">
+<link rel="import" href="../elements/global-variable.html">
+<link rel="import" href="../elements/dialog-button.html">
+<link rel="import" href="../elements/dialog-cast.html">
+<link rel="import" href="../elements/remote-container.html">
 
 <dom-module id="app-page-remote">
   <style>
   </style>
 
   <template>
+    <more-route context name="remote" params="{{params}}"></more-route>
+
     <global-variable id="global" key="page-remote"></global-variable>
     <global-variable key="main" value="{{main}}"></global-variable>
 
