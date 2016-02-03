@@ -2,7 +2,6 @@
 <link rel="import" href="../elements/global-variable.html">
 <link rel="import" href="app-page-root.html">
 <link rel="import" href="app-page-remote.html">
-<link rel="import" href="routes.html">
 
 <dom-module id="app-main">
   <style>
@@ -14,12 +13,10 @@
   <template>
     <global-variable id="global" key="main"></global-variable>
 
-    <more-route-selector>
-      <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
-        <app-page-root id="main" name="main"></app-page-root>
-        <app-page-remote id="remote" name="remote"></app-page-remote>
-      </iron-pages>
-    </more-route-selector>
+    <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
+      <app-page-root id="root" name="root"></app-page-root>
+      <app-page-remote id="remote" name="remote"></app-page-remote>
+    </iron-pages>
   </template>
 </dom-module>
 
