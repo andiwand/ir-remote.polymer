@@ -6,8 +6,7 @@
 <link rel="import" href="../../paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../elements/import-jquery.html">
-<link rel="import" href="../elements/global-variable.html">
+<link rel="import" href="../../import-jquery/import-jquery.html">
 <link rel="import" href="../elements/dialog-button.html">
 <link rel="import" href="../elements/dialog-cast.html">
 <link rel="import" href="../elements/remote-container.html">
@@ -17,9 +16,6 @@
   </style>
 
   <template>
-    <global-variable id="global" key="page-remote"></global-variable>
-    <global-variable key="main" value="{{main}}"></global-variable>
-
     <dialog-button id="dialog-button" on-accept="buttonDialogAccept"></dialog-button>
     <dialog-cast id="dialog-cast"></dialog-cast>
 
@@ -49,9 +45,6 @@
         notify: true,
         value: true
       },
-    },
-    ready: function() {
-      this.$.global.value = this;
     },
     load: function(remote) {
       this.remote = remote;

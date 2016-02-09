@@ -1,4 +1,5 @@
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="app-routing.html">
 <link rel="import" href="../../iron-icons/iron-icons.html">
 <link rel="import" href="../../iron-icons/hardware-icons.html">
 <link rel="import" href="../../iron-icons/editor-icons.html">
@@ -10,8 +11,7 @@
 <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-item/paper-item.html">
-<link rel="import" href="../elements/import-jquery.html">
-<link rel="import" href="../elements/global-variable.html">
+<link rel="import" href="../../import-jquery/import-jquery.html">
 <link rel="import" href="../elements/list-remote.html">
 <link rel="import" href="../elements/list-device.html">
 <link rel="import" href="../elements/dialog-remote.html">
@@ -25,9 +25,7 @@
   </style>
 
   <template>
-    <global-variable id="global" key="page-main"></global-variable>
-    <global-variable key="main" value="{{main}}"></global-variable>
-    <global-variable key="page-remote" value="{{pageRemote}}"></global-variable>
+    <app-routing switch="root" value="{{page}}"></app-routing>
 
     <dialog-remote id="dialog-remote" on-accept="onAcceptRemoteDialog"></dialog-remote>
 
@@ -36,17 +34,17 @@
         <paper-toolbar>
           <div>Menu</div>
         </paper-toolbar>
-        <paper-menu selected="{{page}}" attr-for-selected="name">
-          <paper-item name="remotes">Remotes</paper-item>
-          <paper-item name="devices">Devices</paper-item>
+        <paper-menu selected="[[page]]" attr-for-selected="page" on-iron-select="onMenuSelect">
+          <paper-item page="remotes" path="/remotes">Remotes</paper-item>
+          <paper-item page="devices" path="/devices">Devices</paper-item>
           <hr/>
-          <paper-item name="settings">Settings</paper-item>
-          <paper-item name="about">About</paper-item>
+          <paper-item page="settings" path="/settings">Settings</paper-item>
+          <paper-item page="about" path="/about">About</paper-item>
         </paper-menu>
       </paper-header-panel>
 
-      <iron-pages selected="{{page}}" attr-for-selected="name" main>
-        <div name="remotes">
+      <iron-pages selected="[[page]]" attr-for-selected="page" main>
+        <div page="remotes">
           <paper-header-panel>
             <paper-toolbar>
               <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -58,7 +56,7 @@
             <list-remote id="list-remote" on-open="onOpen" on-edit="onEdit" on-remove="onRemove"></list-remote>
           </div>
         </div>
-        <div name="devices">
+        <div page="devices">
           <paper-header-panel>
             <paper-toolbar>
               <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -70,11 +68,19 @@
             <list-device id="list-device"></list-device>
           </div>
         </div>
-        <div name="settings">
+        <div page="settings">
           <paper-header-panel>
             <paper-toolbar>
               <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
               <div class="title">Settings</div>
+            </paper-toolbar>
+          </paper-header-panel>
+        </div>
+        <div page="about">
+          <paper-header-panel>
+            <paper-toolbar>
+              <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+              <div class="title">About</div>
             </paper-toolbar>
           </paper-header-panel>
         </div>
@@ -89,12 +95,12 @@
     properties: {
       page: {
         type: String,
-        notify: true,
-        value: "remotes"
-      }
+        notify: true
+      },
     },
-    ready: function() {
-      this.$.global.value = this;
+    onMenuSelect: function(event) {
+      var path = event.detail.item.getAttribute("path");
+      ir.ui.routing.open(path);
     },
     onOpen: function(event) { this.open(event.detail); },
     onEdit: function(event) { this.openRemoteDialog(event.detail); },
@@ -102,8 +108,6 @@
     onNew: function() { this.openRemoteDialog(null); },
     open: function(remote) {
       $("#remote-title").text(remote.name);
-
-      this.main.page = "remote";
 
       this.pageRemote.load(remote);
       this.pageRemote.setEditable(false);

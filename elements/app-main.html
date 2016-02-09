@@ -1,7 +1,7 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="../elements/global-variable.html">
 <link rel="import" href="app-page-root.html">
 <link rel="import" href="app-page-remote.html">
+<link rel="import" href="app-routing.html">
 
 <dom-module id="app-main">
   <style>
@@ -11,27 +11,17 @@
   </style>
 
   <template>
-    <global-variable id="global" key="main"></global-variable>
+    <app-routing switch="main" value="{{page}}"></app-routing>
 
-    <iron-pages id="pages" selected="{{page}}" attr-for-selected="name">
-      <app-page-root id="root" name="root"></app-page-root>
-      <app-page-remote id="remote" name="remote"></app-page-remote>
+    <iron-pages selected="[[page]]" attr-for-selected="page">
+      <app-page-root page="root"></app-page-root>
+      <app-page-remote page="remote"></app-page-remote>
     </iron-pages>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "app-main",
-    properties: {
-      page: {
-        type: String,
-        notify: true,
-        value: "main"
-      }
-    },
-    ready: function() {
-      this.$.global.value = this;
-    }
+    is: "app-main"
   });
 </script>
