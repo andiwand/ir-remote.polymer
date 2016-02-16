@@ -1,0 +1,35 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../app-routing/app-routing.html">
+
+<script src="../../page.js/page.js"></script>
+
+<dom-module id="app-router">
+  <template>
+    <app-route name="root">
+      <app-route name="main">
+        <app-route name="remotes"></app-route>
+        <app-route name="devices"></app-route>
+        <app-route name="settings"></app-route>
+        <app-route name="about"></app-route>
+      </app-route>
+      <app-route name="fullscreen">
+        <app-route name="remote" has-param="true">
+          <app-route name="edit-remote"></app-route>
+          <app-route name="button" has-param="true">
+            <app-route name="edit-button"></app-route>
+          </app-route>
+        </app-route>
+        <app-route name="device" has-param="true">
+          <app-route name="edit-device"></app-route>
+        </app-route>
+      </app-route>
+    </app-route>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({ is: "app-router" });
+
+  page.start({ hashbang: true });
+  page.base("");
+</script>

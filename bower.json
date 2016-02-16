@@ -11,6 +11,7 @@
     "import-commons": "git+https://github.com/andiwand/import-commons.git",
     "ir-client.js": "git+https://github.com/andiwand/ir-client.js.git",
     "ir-remote.js": "git+https://github.com/andiwand/ir-remote.js.git",
+    "app-routing": "git+https://github.com/andiwand/app-routing.git",
     "page.js": "visionmedia/page.js"
   },
   "private": true
