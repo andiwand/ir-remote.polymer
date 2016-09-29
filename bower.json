@@ -5,14 +5,13 @@
     "polymer": "Polymer/polymer#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+    "app-elements": "PolymerElements/app-elements",
     "observe-elements": "git+https://github.com/andiwand/observe-elements.git",
     "wrapper-gridster": "git+https://github.com/andiwand/wrapper-gridster.git",
     "import-jquery": "git+https://github.com/andiwand/import-jquery.git",
     "import-commons": "git+https://github.com/andiwand/import-commons.git",
     "ir-client.js": "git+https://github.com/andiwand/ir-client.js.git",
-    "ir-remote.js": "git+https://github.com/andiwand/ir-remote.js.git",
-    "app-routing": "git+https://github.com/andiwand/app-routing.git",
-    "page.js": "visionmedia/page.js"
+    "ir-remote.js": "git+https://github.com/andiwand/ir-remote.js.git"
   },
   "private": true
 }

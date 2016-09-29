@@ -1,27 +1,237 @@
 <link rel="import" href="../../polymer/polymer.html">
-<link rel="import" href="app-page-root.html">
-<link rel="import" href="app-page-remote.html">
-<link rel="import" href="app-routing.html">
+<link rel="import" href="../../iron-icons/iron-icons.html">
+<link rel="import" href="../../iron-icons/hardware-icons.html">
+<link rel="import" href="../../iron-icons/editor-icons.html">
+<link rel="import" href="../../iron-pages/iron-pages.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../paper-menu/paper-menu.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="../../import-jquery/import-jquery.html">
+<link rel="import" href="../elements/dialog-button.html">
+<link rel="import" href="../elements/dialog-cast.html">
+<link rel="import" href="../elements/remote-container.html">
+<link rel="import" href="../elements/list-remote.html">
+<link rel="import" href="../elements/list-device.html">
+<link rel="import" href="../elements/dialog-remote.html">
 
 <dom-module id="app-main">
   <style>
     /deep/ .page {
       padding: 20px;
     }
+
+    #left {
+      box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px,
+                  rgba(0, 0, 0, 0.098) 0px 0px 3px;
+    }
   </style>
 
   <template>
-    <app-routing switch="main" value="{{page}}"></app-routing>
+    <app-location use-hash-as-path route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/"></app-route>
 
     <iron-pages selected="[[page]]" attr-for-selected="page">
-      <app-page-root page="root"></app-page-root>
-      <app-page-remote page="remote"></app-page-remote>
+      <div page="root">
+        <dialog-button id="dialog-button" on-accept="remoteOnAcceptButtonDialog"></dialog-button>
+        <dialog-cast id="dialog-cast"></dialog-cast>
+
+        <paper-header-panel>
+          <paper-toolbar>
+            <paper-icon-button icon="arrow-back" on-click="back"></paper-icon-button>
+            <div class="title">Remote</div>
+            <paper-icon-button on-click="cast" icon="hardware:cast" hidden="{{remoteEditable}}"></paper-icon-button>
+            <paper-icon-button on-click="buttonAdd" icon="add-circle" hidden="{{!remoteEditable}}"></paper-icon-button>
+            <paper-icon-button on-click="editStart" icon="editor:mode-edit" hidden="{{remoteEditable}}"></paper-icon-button>
+            <paper-icon-button on-click="editEnd" icon="done" hidden="{{!remoteEditable}}"></paper-icon-button>
+          </paper-toolbar>
+        </paper-header-panel>
+
+        <div class="page">
+          <remote-container id="remote" on-button="buttonClick"></remote-container>
+        </div>
+      </div>
+
+      <div page="remote">
+        <dialog-remote id="dialog-remote" on-accept="onAcceptRemoteDialog"></dialog-remote>
+
+        <paper-drawer-panel>
+          <paper-header-panel id="left" drawer>
+            <paper-toolbar>
+              <div>Menu</div>
+            </paper-toolbar>
+            <paper-menu selected="[[page]]" attr-for-selected="page" on-iron-select="onMenuSelect">
+              <paper-item page="remotes">Remotes</paper-item>
+              <paper-item page="devices">Devices</paper-item>
+              <hr/>
+              <paper-item page="settings">Settings</paper-item>
+              <paper-item page="about">About</paper-item>
+            </paper-menu>
+          </paper-header-panel>
+
+          <iron-pages selected="[[page]]" attr-for-selected="page" main>
+            <div page="remotes">
+              <paper-header-panel>
+                <paper-toolbar>
+                  <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                  <div class="title">Remotes</div>
+                  <paper-icon-button icon="add-circle" on-click="remotesOnNew"></paper-icon-button>
+                </paper-toolbar>
+              </paper-header-panel>
+              <div class="page">
+                <list-remote id="list-remote" on-open="remotesOnOpen" on-edit="remotesOnEdit" on-remove="remotesOnRemove"></list-remote>
+              </div>
+            </div>
+            <div page="devices">
+              <paper-header-panel>
+                <paper-toolbar>
+                  <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                  <div class="title">Devices</div>
+                  <paper-spinner active></paper-spinner>
+                </paper-toolbar>
+              </paper-header-panel>
+              <div class="page">
+                <list-device id="list-device"></list-device>
+              </div>
+            </div>
+            <div page="settings">
+              <paper-header-panel>
+                <paper-toolbar>
+                  <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                  <div class="title">Settings</div>
+                </paper-toolbar>
+              </paper-header-panel>
+            </div>
+            <div page="about">
+              <paper-header-panel>
+                <paper-toolbar>
+                  <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                  <div class="title">About</div>
+                </paper-toolbar>
+              </paper-header-panel>
+            </div>
+          </iron-pages>
+        </paper-drawer-panel>
+      </div>
     </iron-pages>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: "app-main"
+    is: "app-main",
+    properties: {
+      remoteEditable: {
+        type: Boolean,
+        notify: true,
+        value: true
+      },
+    },
+    remoteLoad: function(remote) {
+      this.remote = remote;
+      this.$.remote.load(remote.ui);
+    },
+    remoteCast: function() {
+      this.$.dialogCast.open();
+    },
+    remoteBack: function() {
+      this.$.remote.destroy();
+
+      // TODO: other solution?
+      window.setTimeout($.proxy(function() {
+        this.main.page = "main";
+      }, this), 0);
+    },
+    remoteEditSet: function(remoteEditable) {
+      this.$.remote.setEditable(remoteEditable);
+      this.remoteEditable = remoteEditable;
+    },
+    remoteEditStart: function() {
+      this.setEditable(true);
+    },
+    remoteEditEnd: function() {
+      this.setEditable(false);
+
+      var ui = this.$.remote.save();
+      this.remote.ui = ui;
+    },
+    remoteButtonAdd: function() {
+      this.$.remote.addButton();
+    },
+    remoteButtonClick: function(event) {
+      if (this.remoteEditable) {
+        var button = event.detail;
+        this.buttonDialogOpen(button);
+      } else {
+        console.log("send");
+      }
+    },
+    remoteButtonDialogOpen: function(button) {
+      var dialog = this.$["dialog-button"];
+      dialog.set(button);
+      dialog.button = button;
+      dialog.open();
+    },
+    remoteOnAcceptButtonDialog: function() {
+      var dialog = this.$["dialog-button"];
+      var button = dialog.button ? dialog.button : {};
+
+      dialog.get(button);
+      dialog.close();
+    },
+    remotesOnOpen: function(event) {
+      this.remotesOpen(event.detail)
+    },
+    remotesOnEdit: function(event) {
+      this.remotesOpenDialog(event.detail);
+    },
+    remotesOnRemove: function(event) {
+      this.remotesRemove(event.detail);
+    },
+    remotesOnNew: function() {
+      this.remotesOpenDialog(null);
+    },
+    remotesOpen: function(remote) {
+      $("#remote-title").text(remote.name);
+
+      this.pageRemote.load(remote);
+      this.pageRemote.setEditable(false);
+    },
+    remotesRemove: function(remote) {
+      var index = $.inArray(remote, ir.remote.remotes);
+      ir.remote.remotes.splice(index, 1);
+    },
+    remotesOpenDialog: function(remote) {
+      var dialog = this.$["dialog-remote"];
+
+      // TODO: get rid of this stuff; just use .open(remote)
+      dialog.set(remote);
+      dialog.remote = remote;
+      dialog.open();
+    },
+    onAcceptRemoteDialog: function() {
+      var dialog = this.$["dialog-remote"];
+      var remote = dialog.remote ? dialog.remote : {};
+
+      dialog.get(remote);
+      // TODO: outsource default gridster config
+      $.extend(remote, {
+        ui: {
+          type: "grid",
+          settings: {
+            base_margin: [5, 5],
+            base_dimension: [50, 50]
+          },
+          buttons: []
+        }
+      });
+
+      if (!dialog.remote) ir.remote.remotes.push(remote);
+
+      dialog.close();
+    }
   });
 </script>
